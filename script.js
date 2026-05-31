@@ -1,0 +1,354 @@
+/* ==========================================================================
+   Grace Community Fellowship – script.js (მკაცრი ერთ-ქარდიანი სლაიდერის ფიქსი)
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ──────────────────────────────────────────────
+    // 1. STICKY HEADER - სქროლის ეფექტი (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    const header = document.querySelector('.main-header');
+
+    if (header) {
+        const onScroll = () => {
+            header.classList.toggle('scrolled', window.scrollY > 60);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+
+    // ──────────────────────────────────────────────
+    // 2. WELCOME BANNER - გლუვი გამოჩენა სქროლისას (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    const welcomeBanner = document.querySelector('.welcome-banner.floating-banner');
+
+    if (welcomeBanner) {
+        const revealBanner = () => {
+            if (window.scrollY > 1) {
+                welcomeBanner.classList.add('banner-visible');
+                window.removeEventListener('scroll', revealBanner);
+            }
+        };
+        window.addEventListener('scroll', revealBanner, { passive: true });
+    }
+
+
+    // ──────────────────────────────────────────────
+    // 3. MOBILE NAVIGATION (ჰამბურგერი & Dropdowns) (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu   = document.querySelector('.nav-menu');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = navMenu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // კლავიატურის "Escape" ღილაკით დახურვა
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // მობილურზე Dropdown მენიუების მართვის ლოგიკა (აკორდეონი)
+        const dropdownLinks = navMenu.querySelectorAll('.has-dropdown > a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); // არ გადავიდეს ლინკზე
+                    const parentLi = link.parentElement;
+
+                    // სხვა გახსნილი dropdown-ების დაკეტვა
+                    navMenu.querySelectorAll('.has-dropdown').forEach(item => {
+                        if (item !== parentLi) {
+                            item.classList.remove('dropdown-open');
+                        }
+                    });
+
+                    // მიმდინარე მენიუს გადართვა
+                    parentLi.classList.toggle('dropdown-open');
+                }
+            });
+        });
+
+        // ჩვეულებრივ ლინკზე კლიკისას მენიუს ავტომატური დაკეტვა
+        const menuLinks = navMenu.querySelectorAll('.nav-list > li:not(.has-dropdown) a, .dropdown-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+
+    // ──────────────────────────────────────────────
+    // 4. CARD SLIDER (მკაცრი დაცვა: ერთი დრაგი = მაქსიმუმ ერთი ქარდი)
+    // ──────────────────────────────────────────────
+    const track      = document.querySelector('.slider-track');
+    const container  = document.querySelector('.slider-container');
+    const arrowLeft  = document.querySelector('.arrow-left');
+    const arrowRight = document.querySelector('.arrow-right');
+
+    if (track && container) {
+        const originalItems = Array.from(track.children);
+        const originalCount = originalItems.length;
+
+        // ელემენტების კლონირება უსასრულო სქროლისთვის
+        for (let i = 0; i < 3; i++) {
+            originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
+        }
+
+        let currentX   = 0;
+        let targetX    = 0;
+        let isDragging = false;
+        let startX     = 0;
+        let storedX    = 0;
+        const EASE     = 0.075; 
+        const DRAG_THRESHOLD = 50; // მინიმალური პიქსელები დრაგის დასაფიქსირებლად
+
+        function getItemMetrics() {
+            const item = track.querySelector('.card-item');
+            if (!item) return { itemWidth: 380, totalWidth: 380 * originalCount };
+            const rect  = item.getBoundingClientRect();
+            const style = window.getComputedStyle(item);
+            const ml    = parseFloat(style.marginLeft)  || 0;
+            const mr    = parseFloat(style.marginRight) || 0;
+            const itemWidth  = rect.width + ml + mr;
+            const totalWidth = itemWidth * originalCount;
+            return { itemWidth, totalWidth };
+        }
+
+        function getContainerPadding() {
+            return parseFloat(window.getComputedStyle(container).paddingLeft) || 0;
+        }
+
+        function init() {
+            const { totalWidth } = getItemMetrics();
+            const pad = getContainerPadding();
+            targetX  = -totalWidth + pad;
+            currentX = -totalWidth + pad;
+            track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+        }
+
+        window.addEventListener('load', init);
+        window.addEventListener('resize', init);
+
+        function snapToNearest() {
+            const { itemWidth } = getItemMetrics();
+            const pad = getContainerPadding();
+            let rel   = targetX - pad;
+            rel       = Math.round(rel / itemWidth) * itemWidth;
+            targetX   = rel + pad;
+        }
+
+        // მაუსის დაჭერა
+        container.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.slider-arrow')) return;
+            e.preventDefault();
+            isDragging = true;
+            startX  = e.clientX;
+            storedX = targetX;
+        });
+
+        // მაუსის მოძრაობა მკაცრი ჩამკეტით
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const { itemWidth } = getItemMetrics();
+            const diff = e.clientX - startX;
+
+            // თუ დრაგის მანძილმა გადააჭარბა ლიმიტს, გადაგყავს ზუსტად 1 ქარდით და თიშავს დრაგს ივენთის გაშვებამდე
+            if (diff > DRAG_THRESHOLD) {
+                targetX = storedX + itemWidth;
+                isDragging = false; // ჩაკეტვა: აღარ აძლევს უფლებას კოორდინატებს, რომ გაიზარდონ
+                snapToNearest();
+            } else if (diff < -DRAG_THRESHOLD) {
+                targetX = storedX - itemWidth;
+                isDragging = false; // ჩაკეტვა
+                snapToNearest();
+            } else {
+                // მცირე მოძრაობისას მიყვება მაუსს გლუვად, სანამ ლიმიტს არ მიაღწევს
+                targetX = storedX + diff;
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            snapToNearest();
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (isDragging) { isDragging = false; snapToNearest(); }
+        });
+
+        // თაჩ დრაგი მობილურისთვის ანალოგიური ჩამკეტით
+        let touchStartX = 0, touchStoredX = 0;
+        let isTouchDragging = false;
+
+        container.addEventListener('touchstart', (e) => {
+            isTouchDragging = true;
+            touchStartX  = e.touches[0].clientX;
+            touchStoredX = targetX;
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isTouchDragging) return;
+            
+            const { itemWidth } = getItemMetrics();
+            const diff = e.touches[0].clientX - touchStartX;
+
+            if (diff > DRAG_THRESHOLD) {
+                targetX = touchStoredX + itemWidth;
+                isTouchDragging = false; // ჩაკეტვა
+                snapToNearest();
+            } else if (diff < -DRAG_THRESHOLD) {
+                targetX = touchStoredX - itemWidth;
+                isTouchDragging = false; // ჩაკეტვა
+                snapToNearest();
+            } else {
+                targetX = touchStoredX + diff;
+            }
+        }, { passive: true });
+
+        container.addEventListener('touchend', () => {
+            isTouchDragging = false;
+            snapToNearest();
+        });
+
+        // ისრების ფუნქციონალი
+        if (arrowLeft) {
+            arrowLeft.addEventListener('click', () => {
+                targetX += getItemMetrics().itemWidth;
+                snapToNearest();
+            });
+        }
+        if (arrowRight) {
+            arrowRight.addEventListener('click', () => {
+                targetX -= getItemMetrics().itemWidth;
+                snapToNearest();
+            });
+        }
+
+        // ანიმაციის ციკლი
+        function animate() {
+            currentX += (targetX - currentX) * EASE;
+            const { totalWidth } = getItemMetrics();
+            const pad = getContainerPadding();
+            if (currentX > pad)                    { targetX -= totalWidth; currentX -= totalWidth; }
+            if (currentX < -(totalWidth * 2) + pad){ targetX += totalWidth; currentX += totalWidth; }
+            track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }
+
+
+    // ──────────────────────────────────────────────
+    // 5. BACK TO TOP ღილაკის მუშაობის ლოგიკა (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    const backToTopBtn = document.querySelector('.back-to-top');
+
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+        }, { passive: true });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+
+    // ──────────────────────────────────────────────
+    // 6. VIDEO PLACEHOLDERS - ინტერაქტიული YouTube ფლეიერი
+    // ──────────────────────────────────────────────
+    const setupVideoClick = (el) => {
+        el.addEventListener('click', () => {
+            const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`);
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', 'true');
+            iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = '0';
+            iframe.style.borderRadius = 'inherit';
+
+            el.innerHTML = '';
+            el.appendChild(iframe);
+            el.style.display = 'block';
+            el.style.background = '#000';
+            el.removeAttribute('role');
+            el.removeAttribute('tabindex');
+        }, { once: true });
+    };
+
+    document.querySelectorAll('.video-placeholder, .main-video-placeholder, .camp-video-placeholder').forEach(el => {
+        setupVideoClick(el);
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
+
+
+    // ──────────────────────────────────────────────
+    // 7. რუკის სქროლის დამცავი ფენა (Map Overlay) (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    document.querySelectorAll('.map-wrapper').forEach(wrapper => {
+        const overlay  = wrapper.querySelector('.map-overlay');
+        const hint     = wrapper.closest('.contact-map-col')?.querySelector('.map-hint');
+        const hintText = hint?.querySelector('.hint-text');
+        if (!overlay) return;
+
+        overlay.addEventListener('click', () => {
+            overlay.classList.add('map-unlocked');
+            if (hint)     hint.classList.add('hint-active');
+            if (hintText) hintText.textContent = 'რუკის დასაბლოკად მაუსი გაწიეთ გარეთ';
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            overlay.classList.remove('map-unlocked');
+            if (hint)     hint.classList.remove('hint-active');
+            if (hintText) hintText.textContent = 'დააკლიკეთ რუკაზე ინტერაქტივისთვის';
+        });
+
+        overlay.addEventListener('touchstart', () => {
+            overlay.classList.add('map-unlocked');
+        }, { passive: true });
+    });
+
+
+    // ──────────────────────────────────────────────
+    // 8. BUILDING VIDEO - Autoplay Fallback (ხელუხლებელი)
+    // ──────────────────────────────────────────────
+    const buildingVideo = document.querySelector('.building-video');
+
+    if (buildingVideo) {
+        buildingVideo.play().catch(() => {
+            const tryPlay = () => {
+                buildingVideo.play().catch(() => {});
+                document.removeEventListener('click',     tryPlay);
+                document.removeEventListener('touchstart', tryPlay);
+            };
+            document.addEventListener('click',     tryPlay, { once: true });
+            document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+        });
+    }
+
+});
+

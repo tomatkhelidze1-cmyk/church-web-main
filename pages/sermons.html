@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="სახარების რწმენის ეკლესია – ქუთაისი – ქადაგებები და სწავლებები.">
+    <title>ქადაგებები – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght=300;400;500;600;700&family=Noto+Sans+Georgian:wght=300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+    
+    <style>
+        /* სპეციფიკური სტილები ქადაგებების გვერდისთვის (ერგება შენს style.css-ს) */
+        .sermons-hero {
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), url('https://picsum.photos/1920/1080?random=20') center/cover no-repeat;
+            padding: 180px 20px 100px;
+            text-align: center;
+            color: var(--white);
+        }
+        .sermons-hero h1 {
+            color: var(--white) !important;
+        }
+        .grid-uppertitle {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .main-player-section {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+        .player-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: var(--dark-900);
+            line-height: 0;
+        }
+        .player-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .player-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 0;
+        }
+        .series-section {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+        .series-grid {
+            max-width: 960px;
+            margin: 50px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .series-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            border: 1px solid #eef0f2;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+        .series-card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+        .series-header {
+            padding: 26px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            background: #ffffff;
+        }
+        .series-info h3 {
+            font-size: 1.35rem;
+            color: var(--dark-900);
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .series-info p {
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .series-badge {
+            background: rgba(170, 149, 79, 0.1);
+            color: var(--gold);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 15px;
+            white-space: nowrap;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .series-icon {
+            font-size: 1.1rem;
+            color: var(--gold);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-left: 20px;
+        }
+        .episodes-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-light);
+            border-top: 1px solid #f1f3f5;
+        }
+        .episodes-list {
+            padding: 16px 30px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .episode-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 22px;
+            background: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .episode-item:hover {
+            border-color: var(--gold);
+            background: rgba(170, 149, 79, 0.02);
+            transform: translateX(5px);
+        }
+        .episode-title {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--dark-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .episode-title i {
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+        .episode-meta {
+            font-size: 0.85rem;
+            color: #888;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* აქტიური კლასები ანიმაციისთვის */
+        .series-card.is-open .series-icon {
+            transform: rotate(180deg);
+        }
+        .series-card.is-open .episodes-panel {
+            max-height: 800px; /* გაზრდილია ლიმიტი */
+        }
+        .episode-item.is-playing {
+            border-color: var(--gold);
+            background: rgba(170, 149, 79, 0.08);
+        }
+        .episode-item.is-playing .episode-title {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        /* ნავბარის კორექცია, რადგან ქადაგებების გვერდზე სქროლი თავიდანვე არ გვაქვს */
+        .main-header {
+            background-color: rgba(170,149,79,0.02) !important;
+        }
+        .main-header.scrolled {
+        background-color: var(--dark-900) !important; /* ან პირდაპირ #111111 */
+        backdrop-filter: blur(10px);
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header" role="banner">
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" aria-label="სახარების რწმენის ეკლესია – მთავარი">
+                    <svg width="50" height="40" viewBox="0 0 100 80" fill="#aa954f" aria-hidden="true">
+                        <path d="M10 70 L20 20 L40 45 L50 10 L60 45 L80 20 L90 70 Z M10 75 L90 75 L90 78 L10 78 Z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="../index.html">მთავარი</a></li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">ჩვენს შესახებ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                            <li><a href="team.html">მსახურთა გუნდი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                            <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">მსახურებები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                            <li><a href="youth.html">ახალგაზრდული</a></li>
+                            <li><a href="kids.html">ბავშვები</a></li>
+                            <li><a href="learning-space.html">სასწავლო სივრცე</a></li>
+                            <li><a href="consultation.html">კონსულტაცია</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="registration.html">რეგისტრაცია</a></li>
+                    <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                    <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-socials" aria-label="სოციალური ქსელები">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="sermons-hero">
+        <span class="grid-uppertitle">მედია არქივი</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: 2px; font-family: 'Montserrat', sans-serif;">ონლაინ ქადაგებები</h1>
+        <p class="cursive-text" style="margin-bottom: 0; font-size: 1.3rem; color: var(--gold-light);">მოუსმინე და გაიზარდე რწმენაში</p>
+    </section>
+
+    <section class="main-player-section" id="playerZone">
+        <div class="player-wrapper">
+            <div class="player-container">
+                <iframe 
+                    id="mainSermonPlayer"
+                    src="https://www.youtube-nocookie.com/embed/FnAaUcbma58?rel=0&modestbranding=1" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="series-section">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <span class="grid-uppertitle">თემატური სწავლებები</span>
+            <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark-900); font-family: 'Montserrat', sans-serif;">სერიული ქადაგებები</h2>
+        </div>
+
+        <div class="series-grid">
+            
+            <div class="series-card">
+                
+                <div class="series-header">
+                    <div class="series-info">
+                        <h3>გაცემის პრინციპები</h3>
+                        <p>აღმოაჩინე ბიბლიური ფინანსური თავისუფლებისა და კურთხევის საიდუმლოებები.</p>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span class="series-badge">4 ეპიზოდი</span>
+                        <i class="fa-solid fa-chevron-down series-icon"></i>
+                    </div>
+                </div>
+                <div class="episodes-panel">
+                    <div class="episodes-list">
+                        <div class="episode-item is-playing" data-video-id="FnAaUcbma58">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: გულის მოტივაცია</span>
+                            <span class="episode-meta">45 წთ</span>
+                        </div>
+                        <div class="episode-item" data-video-id="dQw4w9WgXcQ">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: ერთგულების ნაყოფი</span>
+                            <span class="episode-meta">52 წთ</span>
+                        </div>
+                        <div class="episode-item" data-video-id="FnAaUcbma58">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: მინდობილობა გამოცდისას</span>
+                            <span class="episode-meta">38 წთ</span>
+                        </div>
+                        <div class="episode-item" data-video-id="dQw4w9WgXcQ">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 4: უხვი მოსავალი</span>
+                            <span class="episode-meta">41 წთ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-info">
+                        <h3>რწმენის ნაბიჯები</h3>
+                        <p>როგორ ვიაროთ ღმერთთან ერთად მაშინაც, როცა გარემოებები ბუნდოვანია.</p>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span class="series-badge">3 ეპიზოდი</span>
+                        <i class="fa-solid fa-chevron-down series-icon"></i>
+                    </div>
+                </div>
+                <div class="episodes-panel">
+                    <div class="episodes-list">
+                        <div class="episode-item" data-video-id="dQw4w9WgXcQ">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: ნოეს მორჩილება</span>
+                            <span class="episode-meta">48 წთ</span>
+                        </div>
+                        <div class="episode-item" data-video-id="FnAaUcbma58">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: აბრაამის გამოცდა</span>
+                            <span class="episode-meta">50 წთ</span>
+                        </div>
+                        <div class="episode-item" data-video-id="dQw4w9WgXcQ">
+                            <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: პეტრეს ნაბიჯი წყალზე</span>
+                            <span class="episode-meta">44 წთ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-label="Contact and location">
+        <div class="contact-container">
+            <div class="contact-info-col">
+                <span class="contact-eyebrow">მოგვძებნეთ</span>
+                <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+                <p class="contact-intro">მოხარული ვიქნებით თქვენი სტუმრობით ამ კვირას. ჩვენი კარები ყოველთვის ღიაა.</p>
+
+                <div class="contact-block">
+                    <div class="contact-icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="contact-block-text">
+                        <p class="contact-label">ფიზიკური მისამართი</p>
+                        <a href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7" target="_blank" rel="noopener noreferrer" class="contact-address-link">
+                            მესხის ქ. 42<br>ქუთაისი, საქართველო
+                            <i class="fa-solid fa-arrow-up-right-from-square contact-ext-icon" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-block">
+                    <div class="contact-icon-wrap"><i class="fa-regular fa-envelope"></i></div>
+                    <div class="contact-block-text">
+                        <p class="contact-label">ელ-ფოსტა</p>
+                        <a href="mailto:info@efckutaisi.ge" style="text-decoration: none; color: #ffffff; font-weight: 500;">info@efckutaisi.ge</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-map-col">
+                <div class="map-wrapper" role="region" aria-label="Interactive map">
+                    <div class="map-overlay" title="Click to interact with the map" aria-hidden="true"></div>
+                    <iframe
+                        class="contact-map-iframe"
+                        src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="ქუთაისის სახარების რწმენის ეკლესია"
+                    ></iframe>
+                </div>
+                <p class="map-hint">
+                    <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
+                    <span class="hint-text">დააკლიკეთ რუკაზე ინტერაქტივისთვის</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="minimal-copyright-strip">
+        <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+    </div>
+
+    <button class="back-to-top" aria-label="ზემოთ ასვლა" title="ზემოთ ასვლა">
+        <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="../script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Accordion Toggle Logic
+            const seriesHeaders = document.querySelectorAll('.series-header');
+            
+            seriesHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const currentCard = header.parentElement;
+                    
+                    document.querySelectorAll('.series-card').forEach(card => {
+                        if(card !== currentCard) {
+                            card.classList.remove('is-open');
+                        }
+                    });
+                    
+                    currentCard.classList.toggle('is-open');
+                });
+            });
+
+            // 2. Video Swapping Logic
+            const episodeItems = document.querySelectorAll('.episode-item');
+            const mainPlayer = document.getElementById('mainSermonPlayer');
+            const playerZone = document.getElementById('playerZone');
+
+            episodeItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const videoId = item.getAttribute('data-video-id');
+                    
+                    if(videoId && mainPlayer) {
+                        mainPlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+                        
+                        episodeItems.forEach(el => el.classList.remove('is-playing'));
+                        item.classList.add('is-playing');
+                        
+                        playerZone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // 3. Independent Header Scroll Logic for this page
+            const headerElement = document.querySelector('.main-header');
+            if (headerElement) {
+                const checkScroll = () => {
+                    headerElement.classList.toggle('scrolled', window.scrollY > 40);
+                };
+                window.addEventListener('scroll', checkScroll, { passive: true });
+                checkScroll();
+            }
+        });
+    </script>
+</body>
+</html>

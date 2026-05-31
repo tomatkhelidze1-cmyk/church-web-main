@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="სასწავლო სივრცე – სახარების რწმენის ეკლესია – ქუთაისი">
+    <title>სასწავლო სივრცე – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* სექციების შიდა დაშორებები */
+        .section-padding-md {
+            padding: 60px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* მიზნების სიის სტილიზაცია */
+        .goals-list {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 0 0;
+            text-align: left;
+        }
+
+        .goals-list li {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .goals-list li i {
+            color: #aa954f;
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+
+        /* ლიდერის სექციის სტილი */
+        .single-leader-section {
+            background-color: #faf8f5;
+            padding: 80px 0;
+        }
+
+        .leader-premium-card {
+            background: #ffffff;
+            border: 1px solid #f3eedf;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(170, 149, 79, 0.03);
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .leader-img-box {
+            height: 100%;
+            min-height: 400px;
+            background-color: #ebdcd0;
+            overflow: hidden;
+        }
+
+        .leader-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .leader-detailed-info {
+            padding: 45px;
+            text-align: left;
+        }
+
+        .leader-title-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #111;
+            margin: 0 0 6px 0;
+        }
+
+        .leader-title-role {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #aa954f;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .leader-detailed-bio {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        @media (max-width: 991px) {
+            .responsive-two-col {
+                grid-template-columns: 1fr !important;
+                gap: 40px !important;
+            }
+            .leader-premium-card {
+                grid-template-columns: 1fr;
+            }
+            .leader-img-box {
+                min-height: 300px;
+                height: 350px;
+            }
+            .leader-detailed-info {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ჰედერი / ნავბარი -->
+    <header class="main-header" role="banner">
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" aria-label="სახარების რწმენის ეკლესია – მთავარი">
+                    <svg width="50" height="40" viewBox="0 0 100 80" fill="#aa954f" aria-hidden="true">
+                        <path d="M10 70 L20 20 L40 45 L50 10 L60 45 L80 20 L90 70 Z M10 75 L90 75 L90 78 L10 78 Z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="../index.html">მთავარი</a></li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">ჩვენს შესახებ <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                            <li><a href="team.html">მსახურთა გუნდი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                            <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">მსახურებები <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                            <li><a href="youth.html">ახალგაზრდული</a></li>
+                            <li><a href="kids.html">ბავშვები</a></li>
+                            
+                            <li><a href="learning-space.html">სასწავლო სივრცე</a></li>
+                            <li><a href="consultation.html">კონსულტაცია</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="registration.html">რეგისტრაცია</a></li>
+                    <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                    <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-socials" aria-label="სოციალური ქსელები">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+
+        <!-- გვერდის ბანერი / Hero სექცია -->
+        <section class="hero-section" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="hero-content">
+                <h1>სასწავლო სივრცე</h1>
+                <p class="cursive-text">აღმოაჩინე შენი მოწოდება და განავითარე ნიჭი</p>
+            </div>
+        </section>
+
+        <!-- სექცია 1: ორსვეტიანი ბადე (ჩვენი მიზანი და განრიგი ვიდეოსთან ერთად) -->
+        <section style="padding: 60px 0; background-color: #ffffff;">
+            <div class="responsive-two-col" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 2.2fr 1fr; gap: 50px; align-items: stretch;">
+                
+                <!-- მარცხენა სვეტი: ჩვენი მიზანი -->
+                <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+                    <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.6rem; color: #333; margin: 0; padding: 0; line-height: 1.1; text-align: left;">ჩვენი მიზანი</h2>
+                    
+                    <ul class="goals-list">
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>ღვთისმოსავი მამაკაცებისა და ქალების აღზრდა, რომლებიც დარწმუნებულნი არიან საკუთარ ვინაობაში ქრისტეში.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>იმის გასაგებად, თუ რა მიმართულება აქვს ღმერთს ჩვენს ცხოვრებაში.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>ღვთისგან ბოძებული უნიკალური ნიჭის აღიარება.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>ერთმანეთთან მნიშვნელოვანი ურთიერთობების დასამყარებლად.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>ჩვენს გარშემო მყოფი ადამიანების მხარდაჭერა და მათთან სულიერი ხიდების შენება (To reach out to people around us).</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 🌟 მარჯვენა სვეტი: განრიგი და Latest Message ვიდეო ბლოკით -->
+                <div style="display: flex; flex-direction: column; justify-content: flex-start; padding-top: 10px;">
+                    <h3 class="bullet-title">ბოლო ქადაგება</h3>
+                    <div class="video-placeholder" role="button" tabindex="0" aria-label="უყურეთ ბოლო ქადაგებას" data-video-id="-yhiipmNtMA">
+                        <i class="fa-solid fa-play" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="bullet-title">ამ კვირაში</h3>
+                    <ul class="week-schedule" aria-label="Weekly schedule">
+                        <li><strong>კვირა 11:00</strong><span>პირველი მსახურება</span></li>
+                        <li><strong>შაბათი 16:00</strong><span>მეორე მსახურება</span></li>
+                        <li><strong>ოთხშაბათი 19:00</strong><span>საოჯახო ჯგუფები, ბავშვები, ახალგაზრდები</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- სექცია 2: სასწავლო განყოფილების ლიდერის პრემიუმ ბლოკი -->
+        <section class="single-leader-section">
+            <div class="container">
+                <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; display: block; margin-bottom: 10px; text-align: center;">განყოფილების ხელმძღვანელი</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.5rem; margin-top: 0; margin-bottom: 50px; color: #111; text-align: center;">გაიცანით ლიდერი</h2>
+                
+                <div class="leader-premium-card scroll-reveal">
+                    <!-- ლიდერის ფოტო -->
+                    <div class="leader-img-box">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=cover&w=600&q=80" alt="თამარ ბერიძე">
+                    </div>
+                    <!-- ლიდერის აღწერა -->
+                    <div class="leader-detailed-info">
+                        <h3 class="leader-title-name">თამარ ბერიძე</h3>
+                        <span class="leader-title-role">სასწავლო განყოფილების ხელმძღვანელი</span>
+                        <p class="leader-detailed-bio">
+                            თამარი ხელმძღვანელობს ეკლესიის სასწავლო სივრცეს, სადაც ის კურირებს თეოლოგიურ კურსებს, პიროვნული ზრდის სემინარებსა და სულიერი მენტორობის პროგრამებს. მისი მიზანია დაეხმაროს თითოეულ ადამიანს ქრისტესმიერი იდენტობის აღმოჩენაში, რათა მათ შეძლონ ღვთისგან ბოძებული უნიკალური ნიჭის მაქსიმალურად რეალიზება ყოველდღიურ ცხოვრებაში.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- კონტაქტისა და რუკის სექცია -->
+        <section class="contact-section" id="contact" aria-label="Contact and location" style="margin-top: 20px;">
+            <div class="contact-container">
+                <div class="contact-info-col">
+                    <span class="contact-eyebrow">მოგვძებნეთ</span>
+                    <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+                    <p class="contact-intro">მოხარული ვიქნებით თქვენი სტუმრობით ამ კვირას. ჩვენი კარები ყოველთვის ღიაა — მობრძანდით თქვენს ოჯახთან ერთად და შეიგრძენით ჩვენი საზოგადოება.</p>
+
+                    <div class="contact-block">
+                        <div class="contact-icon-wrap" aria-hidden="true">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="contact-block-text">
+                            <p class="contact-label">ფიზიკური მისამართი</p>
+                            <a href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7" target="_blank" rel="noopener noreferrer" class="contact-address-link" aria-label="Open address in Google Maps">
+                                მესხის ქ. 42<br>ქუთაისი, საქართველო
+                                <i class="fa-solid fa-arrow-up-right-from-square contact-ext-icon" aria-hidden="true"></i>
+                            </a>
+                            <p class="contact-sub">საფოსტო ყუთი: ქუთაისის სახარების რწმენის ეკლესია</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-block">
+                        <div class="contact-icon-wrap" aria-hidden="true">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+                        <div class="contact-block-text">
+                            <p class="contact-label">ელ-ფოსტა</p>
+                            <a href="mailto:info@efckutaisi.ge" class="contact-address-link">info@efckutaisi.ge</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-block">
+                        <div class="contact-icon-wrap" aria-hidden="true">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="contact-block-text">
+                            <p class="contact-label">მსახურების განრიგი</p>
+                            <table class="hours-table" aria-label="Weekly service schedule">
+                                <tbody>
+                                    <tr>
+                                        <td class="hours-day">კვირა</td>
+                                        <td class="hours-time">11:00 – პირველი მსახურება</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="hours-day">შაბათი</td>
+                                        <td class="hours-time">16:00 – მეორე მსახურება</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="hours-day">ოთხშაბათი</td>
+                                        <td class="hours-time">19:00 – საოჯახო ჯგუფები</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <a href="mailto:info@efckutaisi.ge" class="btn btn-contact-cta">
+                        <i class="fa-regular fa-envelope" aria-hidden="true"></i>  მოგვწერეთ შეტყობინება
+                    </a>
+                </div>
+
+                <div class="contact-map-col">
+                    <div class="map-wrapper" role="region" aria-label="Interactive map">
+                        <div class="map-overlay" title="Click to interact with the map" aria-hidden="true"></div>
+                        <iframe class="contact-map-iframe" src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="ქუთაისის სახარების რწმენის ეკლესია"></iframe>
+                    </div>
+                    <p class="map-hint">
+                        <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
+                        <span class="hint-text">დააკლიკეთ რუკაზე ინტერაქტივისთვის</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ფუტერი -->
+    <div class="minimal-copyright-strip">
+        <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+    </div>
+
+    <script src="../script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // სკროლის Reveal ეფექტები ანიმაციისთვის
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, idx) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = "1";
+                            entry.target.style.transform = "translateY(0)";
+                        }, idx * 100);
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            document.querySelectorAll(".scroll-reveal").forEach(el => {
+                el.style.opacity = "0";
+                el.style.transform = "translateY(20px)";
+                el.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out";
+                revealObserver.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

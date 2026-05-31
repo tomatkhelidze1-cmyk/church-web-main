@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="გაცემა და შესაწირავი – სახარების რწმენის ეკლესია – ქუთაისი">
+    <title>გაცემა – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .section-padding-md { padding: 80px 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ორი სვეტის განლაგება */
+        .give-split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 50px;
+            align-items: start;
+            margin-top: 40px;
+        }
+
+        .give-info-side { text-align: left; }
+        .give-info-side h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #111; margin: 0 0 20px 0; }
+        .give-info-side p { font-family: 'Montserrat', sans-serif; font-size: 1.02rem; color: #555; line-height: 1.75; margin-bottom: 25px; }
+
+        /* რეკვიზიტების ბარათი */
+        .bank-details-card {
+            background: #fdfbf7;
+            border: 1px solid #e1d4b7;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 15px 45px rgba(170, 149, 79, 0.04);
+        }
+
+        .tbc-brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid #00a3e0;
+            color: #00a3e0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .copy-field-group { margin-bottom: 25px; text-align: left; }
+        .copy-field-group label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 600; color: #aa954f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        
+        /* სელექტის სტილი */
+        .purpose-select {
+            width: 100%; padding: 12px; border: 1px solid #e1d8bf; border-radius: 6px;
+            font-family: 'Montserrat', sans-serif; font-size: 0.92rem; background: #ffffff;
+            color: #222; outline: none; cursor: pointer; margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+        .purpose-select:focus { border-color: #aa954f; }
+
+        .copy-input-wrapper { display: flex; background: #ffffff; border: 1px solid #e1d8bf; border-radius: 6px; overflow: hidden; transition: border-color 0.3s; }
+        .copy-input-wrapper:hover { border-color: #aa954f; }
+        .copy-value-text { flex-grow: 1; padding: 14px 16px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #222; font-weight: 500; background: transparent; border: none; outline: none; width: 100%; }
+        
+        .btn-copy-action { background: #f4eee1; border: none; border-left: 1px solid #e1d8bf; color: #aa954f; padding: 0 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+        .btn-copy-action:hover { background: #aa954f; color: #ffffff; }
+
+        /* 🌟 გადიდებული QR კოდის სექცია */
+        .qr-code-section {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px dashed #e1d8bf;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-image-box {
+            width: 180px; /* ზომა გაიზარდა 110px-დან */
+            height: 180px;
+            background: #ffffff;
+            border: 1px solid #e1d8bf;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+        .qr-image-box img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .qr-text-box h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #111; margin: 0 0 8px 0; }
+        .qr-text-box p { font-family: 'Montserrat', sans-serif; font-size: 0.88rem; color: #666; margin: 0; max-width: 450px; line-height: 1.5; }
+
+        /* Toast შეტყობინება */
+        .copy-success-toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #111; color: #fff; padding: 12px 24px; border-radius: 30px;
+            font-family: 'Montserrat', sans-serif; font-size: 0.88rem; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 9999;
+        }
+        .copy-success-toast.toast-show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .copy-success-toast i { color: #34a853; }
+
+        @media (max-width: 991px) {
+            .give-split-layout { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌟 გასწორებული ნავბარი ჩამოსაშლელი მენიუებითა და სოციალურებით -->
+    <header class="main-header" role="banner">
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" aria-label="სახარების რწმენის ეკლესია – მთავარი">
+                    <svg width="50" height="40" viewBox="0 0 100 80" fill="#aa954f" aria-hidden="true">
+                        <path d="M10 70 L20 20 L40 45 L50 10 L60 45 L80 20 L90 70 Z M10 75 L90 75 L90 78 L10 78 Z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="../index.html">მთავარი</a></li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">ჩვენს შესახებ <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                            <li><a href="team.html">მსახურთა გუნდი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                            <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">მსახურებები <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                            <li><a href="youth.html">ახალგაზრდული</a></li>
+                            <li><a href="kids.html">ბავშვები</a></li>
+                            
+                            <li><a href="learning-space.html">სასწავლო სივრცე</a></li>
+                            <li><a href="consultation.html">კონსულტაცია</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="registration.html">რეგისტრაცია</a></li>
+                    <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                    <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-socials" aria-label="სოციალური ქსელები">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+        <section class="hero-section" style="height: 45vh; min-height: 350px;">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>გაცემა და ონლაინ შესაწირავი</h1>
+                <p class="cursive-text">შენი მხარდაჭერა ცვლის ადამიანთა ცხოვრებას</p>
+            </div>
+        </section>
+
+        <section class="section-padding-md" style="background-color: #ffffff;">
+            <div class="container">
+                <div class="give-split-layout">
+                    
+                    <div class="give-info-side">
+                        <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; display: block; margin-bottom: 8px;">შესაწირავი</span>
+                        <h2>გახდი პარტნიორი მსახურებაში</h2>
+                        <p>„თითოეულმა გასცეს ისე, როგორც გულში აქვს გადაწყვეტილი, არა უხალისოდ ანდა დაძალებით, ვინაიდან სიხარულით გამცემი უყვარს ღმერთს“ (მეორე კორინთელთა 9:7).</p>
+                        <p>თქვენი ყოველი შესაწირავი პირდაპირ ხმარდება ახალგაზრდული და ბავშვთა პროექტების განვითარებას, უფასო სასწავლო სივრცეების მოწყობას, საქველმოქმედო გასვლებსა და საზოგადოების სულიერ გაძლიერებას.</p>
+                        <p style="font-weight: 500; color: #aa954f;">გმადლობთ თქვენი გულუხვობისა და თანადგომისთვის!</p>
+                    </div>
+
+                    <div class="bank-details-card">
+                        <div class="tbc-brand-badge">
+                            <i class="fa-solid fa-building-columns"></i> TBC Bank / თიბისი ბანკი
+                        </div>
+
+                        <div class="copy-field-group">
+                            <label>მიმღების დასახელება</label>
+                            <div class="copy-input-wrapper">
+                                <input type="text" class="copy-value-text" id="bankRecipient" value="ააიპ გრეის ქომიუნითი ფელოუშიფ" readonly>
+                                <button class="btn-copy-action" onclick="copyTargetText('bankRecipient')"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="copy-field-group">
+                            <label>ანგარიშის ნომერი (IBAN)</label>
+                            <div class="copy-input-wrapper">
+                                <input type="text" class="copy-value-text" id="bankIban" value="GE00TB0000000000000000" readonly style="font-weight: 600;">
+                                <button class="btn-copy-action" onclick="copyTargetText('bankIban')"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- 🌟 4 ვარიანტიანი ჩამოსაშლელი დანიშნულება კოპირებით -->
+                        <div class="copy-field-group">
+                            <label>გადახდის დანიშნულება (აირჩიეთ სასურველი)</label>
+                            <select class="purpose-select" id="purposeChooser" onchange="updatePurposeValue()">
+                                <option value="შესაწირავი">შესაწირავი</option>
+                                <option value="მეათედის შესაწირავი">მეათედის შესაწირავი</option>
+                                <option value="სამშენებლო შესაწირავი">სამშენებლო შესაწირავი</option>
+                                <option value="მისიონერული შესაწირავი">მისიონერული შესაწირავი</option>
+                            </select>
+                            <div class="copy-input-wrapper">
+                                <input type="text" class="copy-value-text" id="bankPurpose" value="შესაწირავი" readonly>
+                                <button class="btn-copy-action" onclick="copyTargetText('bankPurpose')"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- 🌟 გადიდებული QR სექცია ცენტრში -->
+                        <div class="qr-code-section">
+                            <div class="qr-image-box">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=GE00TB0000000000000000" alt="TBC QR Code">
+                            </div>
+                            <div class="qr-text-box">
+                                <h4>სწრაფი QR გადახდა</h4>
+                                <p>გახსენით თქვენი თიბისი აპლიკაცია, დასკანერეთ გადიდებული კოდი და გადარიცხეთ სასურველი თანხა წამებში, ზედმეტი ველების შევსების გარეშე.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- რუკა -->
+        <section class="contact-section" id="contact" style="margin-top: 20px;">
+            <div class="contact-container">
+                <div class="contact-info-col">
+                    <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+                    <div class="contact-block">
+                        <div class="contact-icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="contact-block-text">
+                            <p class="contact-label">მისამართი</p>
+                            <a href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7" target="_blank" rel="noopener noreferrer" class="contact-address-link">მესხის ქ. 42, ქუთაისი, საქართველო</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map-col">
+                    <div class="map-wrapper">
+                        <iframe src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="copy-success-toast" id="copyToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>წარმატებით დაკოპირდა ბუფერში!</span>
+    </div>
+
+    <div class="minimal-copyright-strip">
+        <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+    </div>
+
+    <script src="../script.js"></script>
+
+    <script>
+        // სელექტის შეცვლისას ინპუტის მნიშვნელობის განახლება
+        function updatePurposeValue() {
+            const chooser = document.getElementById("purposeChooser");
+            const purposeInput = document.getElementById("bankPurpose");
+            purposeInput.value = chooser.value;
+        }
+
+        // კოპირების ფუნქცია
+        function copyTargetText(elementId) {
+            const inputEl = document.getElementById(elementId);
+            inputEl.select();
+            inputEl.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(inputEl.value);
+
+            const toast = document.getElementById("copyToast");
+            toast.classList.add("toast-show");
+
+            setTimeout(() => {
+                toast.classList.remove("toast-show");
+            }, 2000);
+        }
+
+        // ეს კოდი უნდა ჩაისვას უშუალოდ PAGES/GIVE.HTML ფაილის სკრიპტის ბოლოში!
+        window.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const purposeParam = urlParams.get('purpose');
+
+            if (purposeParam === 'building') {
+                const chooser = document.getElementById("purposeChooser");
+                const purposeInput = document.getElementById("bankPurpose");
+                
+                if (chooser && purposeInput) {
+                    chooser.value = "სამშენებლო შესაწირავი";
+                    purposeInput.value = "სამშენებლო შესაწირავი";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

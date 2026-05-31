@@ -1,0 +1,1118 @@
+﻿/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold:        #aa954f;
+    --gold-light:  #c9b26a;
+    --gold-dim:    rgba(170, 149, 79, 0.25);
+    --dark-900:    #111111;
+    --dark-800:    #1a1a1a;
+    --dark-700:    #222222;
+    --dark-600:    #333333;
+    --dark-400:    #444444;
+    --text-muted:  #cccccc;
+    --text-soft:   #555555;
+    --white:       #ffffff;
+    --bg-light:    #fafafa;
+    --radius-md:   12px;
+    --radius-lg:   16px;
+    --shadow-md:   0 20px 45px rgba(0,0,0,0.35);
+    --shadow-lg:   0 30px 60px rgba(0,0,0,0.45);
+    --transition:  0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: 'Noto Sans Georgian', 'Montserrat', sans-serif;
+    background-color: var(--bg-light);
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+ul  { list-style: none; }
+
+/* ==========================================================================
+   HEADER & DROPDOWN NAVIGATION (ოპტიმიზებული მარცხენა გასწორებით)
+   ========================================================================== */
+.main-header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+}
+
+.main-header.scrolled {
+    background: rgba(17, 17, 17, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 14px 0;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    gap: 20px;
+}
+
+.logo a {
+    display: inline-block;
+    text-decoration: none;
+    line-height: 0;
+    transition: opacity 0.3s;
+}
+.logo a:hover { opacity: 0.8; }
+
+/* ნავ სიის სტილები */
+.nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-list > li {
+    position: relative;
+    margin: 0 4px;
+}
+
+.nav-list a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-list > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 14px;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width var(--transition);
+}
+
+.nav-list > li:hover > a {
+    color: var(--gold);
+}
+
+.nav-list > li:hover > a::after {
+    width: calc(100% - 28px);
+}
+
+/* სპეციალური "გაეცი" ღილაკი ნავბარში */
+.nav-give-item {
+    margin-left: 12px !important;
+}
+
+.btn-nav-give {
+    background: var(--gold) !important;
+    color: var(--dark-900) !important;
+    border-radius: 4px;
+    padding: 8px 18px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(170, 149, 79, 0.3);
+    transition: transform 0.2s, background 0.3s !important;
+}
+
+.btn-nav-give:hover {
+    background: var(--gold-light) !important;
+    transform: translateY(-1px);
+}
+
+.btn-nav-give::after {
+    display: none !important;
+}
+
+/* Dropdown ქვე-მენიუების ახალი სტილები დესკტოპზე */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0; /* გასწორდა ზუსტად მშობელი ელემენტის მარცხენა კიდეზე */
+    transform: translateY(15px); /* წაიშალა ჰორიზონტალური translateX */
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 3px solid var(--gold);
+    min-width: 240px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    padding: 12px 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px 10px 14px; /* მარცხენა პედინგი ზუსტად ემთხვევა მთავარ მენიუს */
+    display: block;
+    width: 100%;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu a:hover {
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 18px; /* ჰოვერზე ოდნავ იწევს წინ ეფექტისთვის */
+}
+
+/* Dropdown-ის გამოჩენა Hover-ზე დესკტოპზე */
+@media (min-width: 769px) {
+    .has-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0); /* მხოლოდ ვერტიკალური ამოწევის ანიმაცია */
+    }
+}
+
+/* ==========================================================================
+   HEADER SOCIALS (სოც. მედიის ხატულების ფიქსი - ხაზებისა და წერტილების გარეშე)
+   ========================================================================== */
+.header-socials {
+    display: flex;         /* აქრობს inline-block-ის Whitespace წერტილებს */
+    align-items: center;   /* ასწორებს ხატულებს იდეალურად ცენტრში */
+}
+
+.header-socials a {
+    color: var(--white);
+    margin-left: 18px;
+    font-size: 17px;
+    text-decoration: none !important; /* აქრობს ნებისმიერ ქვედა ხაზგასმას (underline) */
+    display: inline-flex;             /* ასუფთავებს შიდა სივრცეს ხატულის გარშემო */
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s, transform 0.2s;
+}
+
+/* დამატებითი დამცავი ფენა: იცავს ბმულებს გარე ბიბლიოთეკების ფსევდო-ელემენტებისგან */
+.header-socials a::before,
+.header-socials a::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ჰოვერ ეფექტები (უცვლელი) */
+.header-socials a.fb-icon:hover    { color: #1877f2; transform: scale(1.15); }
+.header-socials a.insta-icon:hover { color: #e1306c; transform: scale(1.15); }
+.header-socials a.yt-icon:hover    { color: #ff0000; transform: scale(1.15); }
+/* მობილური ჰამბურგერი */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1100;
+}
+.hamburger span {
+    display: block;
+    width: 26px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+.hamburger.active span:nth-child(1) { transform: translateY(7px)  rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ==========================================================================
+   HERO სექცია
+   ========================================================================== */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    background: url('https://picsum.photos/1920/1080?random=5') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(17,17,17,0.88) 100%);
+}
+
+.hero-content {
+    position: relative;
+    color: var(--white);
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    letter-spacing: 6px;
+    text-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    margin-bottom: 16px;
+}
+
+.cursive-text {
+    font-family: 'Playfair Display', 'Noto Sans Georgian', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    color: #e2d7b5;
+    margin-bottom: 40px;
+}
+
+.btn-hero {
+    border: 2px solid var(--white);
+    color: var(--white);
+    background: transparent;
+    padding: 15px 40px;
+    letter-spacing: 3px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+.btn-hero:hover {
+    background: var(--white);
+    color: var(--dark-900);
+}
+
+/* ==========================================================================
+   საერთო ღილაკები
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: 13px 28px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: var(--dark-900);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.btn-outline {
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 15px 40px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+.btn-outline:hover {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 10px 25px rgba(170, 149, 79, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-card {
+    border: 1px solid rgba(255,255,255,0.6);
+    color: var(--white);
+    background: transparent;
+    padding: 12px 26px;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+.btn-card:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    border-color: var(--white);
+}
+
+/* ==========================================================================
+   WELCOME ბანერი (სრულად თეთრი ტექსტებით)
+   ========================================================================== */
+.welcome-banner.floating-banner {
+    background: rgba(170, 149, 79, 0.94);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    max-width: 1200px;
+    margin: -90px auto 0;
+    padding: 60px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 10;
+    color: var(--white);
+
+    opacity: 0;
+    transform: translateY(40px);
+    pointer-events: none;
+    transition:
+        opacity   0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.welcome-banner.floating-banner.banner-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.welcome-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.welcome-text-block .subtitle {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.welcome-text-block h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--white) !important;
+}
+.welcome-text-block p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    color: #ffffff !important;
+}
+
+/* საათების განლაგება */
+.schedule-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.schedule-item {
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.schedule-item:hover { transform: translateY(-6px); }
+
+.clock-wrap {
+    color: var(--white);
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    transition: transform 0.3s, filter 0.3s;
+}
+.schedule-item:hover .clock-wrap {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+}
+
+.clock-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.schedule-item h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white) !important;
+    line-height: 1;
+}
+
+.schedule-day {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white) !important;
+    letter-spacing: 1px;
+    opacity: 0.95;
+}
+
+.schedule-label {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75) !important;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   ეკლესიის მშენებლობის სექცია
+   ========================================================================== */
+.building-section {
+    background: radial-gradient(circle at 50% 30%, var(--dark-700) 0%, var(--dark-800) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 100px 20px 80px;
+}
+
+.building-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.building-video-wrap {
+    width: 45vw;          /* ძველი 25vw-ის ნაცვლად, ახლა დაიკავებს ეკრანის 45%-ს */
+    min-width: 280px;     /* ოდნავ გაიზარდა მინიმალური ზღვარიც პატარა მონიტორებისთვის */
+    max-width: 650px;     /* ძველი 420px-ის ნაცვლად, მაქსიმალური ზღვარი გაიზარდა 750px-მდე */
+    margin: -50px auto 40px;  /* ინარჩუნებს იდეალურ ცენტრირებას */
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    line-height: 0;
+}
+
+.building-video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    display: block;
+    object-fit: cover;
+    border: none;
+    outline: none;
+}
+
+.gold-subtitle {
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.building-section h2 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.building-text p {
+    color: #cdcdcd;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* ==========================================================================
+   კარუსელ სლაიდერი
+   ========================================================================== */
+.slider-container.floating-slider {
+    margin-top: 0;
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+    user-select: none;
+    cursor: grab;
+}
+.slider-container.floating-slider:active { cursor: grabbing; }
+
+.slider-track {
+    display: flex;
+    padding: 30px 10vw;
+    will-change: transform;
+}
+
+.card-item {
+    flex: 0 0 350px;
+    height: 420px;
+    margin: 0 15px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.5s var(--transition), box-shadow 0.5s var(--transition);
+}
+.card-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
+}
+.card-item:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+.card-item:hover::before {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 100%);
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    color: var(--white);
+    text-align: center;
+    padding: 0 25px;
+    transition: transform 0.4s ease;
+}
+.card-item:hover .card-content { transform: translateY(-5px); }
+
+.card-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    cursor: pointer;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    font-size: 18px;
+}
+.arrow-left  { left:  30px; }
+.arrow-right { right: 30px; }
+.slider-arrow:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* ==========================================================================
+   INFO GRID
+   ========================================================================== */
+.info-grid-section {
+    padding: 100px 20px;
+    background: linear-gradient(to bottom, var(--bg-light) 0%, var(--white) 100%);
+    position: relative;
+    z-index: 2;
+}
+.info-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    align-items: start;
+}
+.grid-uppertitle {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 10px;
+}
+.left-column h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--dark-900);
+    line-height: 1.25;
+}
+.left-column p {
+    color: var(--text-soft);
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+.bullet-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    border-left: 3px solid var(--gold);
+    padding-left: 14px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--dark-900);
+    text-transform: uppercase;
+}
+.video-placeholder,
+.main-video-placeholder {
+    background-color: #f0f0f0;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 40px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+.video-placeholder:hover,
+.main-video-placeholder:hover {
+    transform: scale(1.02);
+    background-color: #ede3c4;
+    color: var(--dark-900);
+}
+.week-schedule { padding: 0; }
+.week-schedule li {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+    gap: 4px;
+}
+.week-schedule li strong { color: #222; font-size: 15px; }
+.week-schedule li span   { color: #777; font-size: 13px; }
+
+/* ==========================================================================
+   მისასალმებელი ვიდეო სექცია
+   ========================================================================== */
+.welcome-video-section {
+    background: radial-gradient(circle at 50% 50%, var(--gold-light) 0%, var(--gold) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 90px 20px;
+}
+.video-container-box { max-width: 750px; margin: 0 auto; }
+.main-video-placeholder {
+    height: 400px;
+    background-color: var(--dark-900);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    font-size: 44px;
+    color: var(--white);
+    margin-bottom: 30px;
+    border-radius: var(--radius-md);
+}
+.welcome-video-section .cursive-text {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: var(--dark-900);
+}
+.welcome-video-section p { color: rgba(0,0,0,0.7); font-size: 1.05rem; }
+
+/* ==========================================================================
+   კონტაქტი და რუკა
+   ========================================================================== */
+.contact-section {
+    background: var(--dark-800);
+    padding: 100px 20px;
+    border-top: 1px solid rgba(170, 149, 79, 0.2);
+}
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.contact-eyebrow {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+.contact-heading {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 18px;
+    line-height: 1.2;
+}
+.contact-intro {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 420px;
+}
+.contact-block {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+.contact-icon-wrap {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: rgba(170, 149, 79, 0.12);
+    border: 1px solid rgba(170, 149, 79, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 16px;
+    margin-top: 2px;
+    transition: background 0.3s, transform 0.3s;
+}
+.contact-block:hover .contact-icon-wrap {
+    background: rgba(170, 149, 79, 0.22);
+    transform: scale(1.08);
+}
+.contact-block-text { flex: 1; }
+.contact-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.contact-address-link {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1.6;
+    transition: color 0.3s;
+}
+.contact-address-link:hover { color: var(--gold); }
+.contact-ext-icon {
+    font-size: 11px;
+    margin-left: 6px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    vertical-align: middle;
+}
+.contact-sub { font-size: 13px; color: #888; margin-top: 6px; line-height: 1.5; }
+
+.hours-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.hours-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+.hours-table tr:last-child { border-bottom: none; }
+.hours-day  { font-size: 13px; font-weight: 600; color: var(--white); padding: 8px 16px 8px 0; white-space: nowrap; width: 42%; }
+.hours-time { font-size: 13px; color: var(--text-muted); padding: 8px 0; }
+
+.btn-contact-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    background: var(--gold);
+    color: var(--dark-900);
+    padding: 15px 32px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 8px 25px rgba(170, 149, 79, 0.25);
+}
+.btn-contact-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(170, 149, 79, 0.4);
+}
+
+.contact-map-col { display: flex; flex-direction: column; gap: 12px; }
+
+.map-wrapper {
+    position: relative;
+    width: 100%; height: 480px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 25px 55px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--dark-700);
+}
+.contact-map-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    border: none; display: block;
+}
+.map-overlay {
+    position: absolute;
+    inset: 0; z-index: 2;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.map-overlay:hover { background: rgba(170, 149, 79, 0.06); }
+.map-overlay.map-unlocked { pointer-events: none; background: transparent; }
+.map-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px; color: #666;
+    letter-spacing: 0.5px;
+    padding-left: 4px;
+    transition: color 0.3s;
+}
+.map-hint i { color: var(--gold); opacity: 0.6; font-size: 13px; }
+
+/* ==========================================================================
+   MINIMAL COPYRIGHT STRIP
+   ========================================================================== */
+.minimal-copyright-strip {
+    background: var(--dark-900);
+    padding: 24px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.minimal-copyright-strip p {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BACK TO TOP
+   ========================================================================== */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--dark-900);
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(0.85);
+    transition:
+        opacity   0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease;
+    box-shadow: 0 6px 24px rgba(170, 149, 79, 0.45);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.back-to-top:hover {
+    background: var(--gold-light);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 12px 32px rgba(170, 149, 79, 0.55);
+}
+
+.back-to-top:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================================================
+   RESPONSIVE (მობილური სექცია ხელუხლებელია, აკორდეონები მუშაობს გამართულად)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .welcome-banner.floating-banner { padding: 50px 40px; }
+    .info-grid-container { gap: 50px; }
+    .contact-container   { gap: 50px; }
+    .map-wrapper         { height: 420px; }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0; right: 0;
+        width: 300px; height: 100vh;
+        background: rgba(17,17,17,0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 100px 30px 40px;
+        z-index: 1050;
+        transform: translateX(100%);
+        transition: transform var(--transition);
+        overflow-y: auto;
+    }
+    
+    .nav-menu.open { 
+        display: flex; 
+        transform: translateX(0); 
+    }
+    
+    .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 15px;
+    }
+    
+    .nav-list > li {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .nav-list a {
+        font-size: 16px;
+        padding: 10px 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-list > li > a::after {
+        display: none;
+    }
+
+    /* მობილური ჩამოსაშლელი სტილი - ინარჩუნებს აკორდეონის ლოგიკას */
+    .dropdown-menu {
+        position: static;
+        transform: none !important;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: none;
+        border-top: none;
+        border-left: 2px solid var(--gold);
+        padding: 5px 0 5px 15px;
+        margin-top: 5px;
+        min-width: 100%;
+        border-radius: 4px;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 10px;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .has-dropdown.dropdown-open .dropdown-menu {
+        display: block;
+    }
+
+    .has-dropdown.dropdown-open > a > i {
+        transform: rotate(180deg);
+        color: var(--gold);
+    }
+
+    .nav-give-item {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 15px;
+    }
+
+    .btn-nav-give {
+        text-align: center;
+        justify-content: center !important;
+        padding: 12px 0 !important;
+    }
+
+    .hamburger       { display: flex; }
+    .header-socials  { display: none; }
+    .hero-section    { height: 100svh; }
+
+    .welcome-banner.floating-banner {
+        margin-top: -40px;
+        border-radius: 0;
+        padding: 40px 25px;
+    }
+    .welcome-container   { grid-template-columns: 1fr; gap: 35px; }
+    .schedule-grid       { justify-content: flex-start; gap: 25px; }
+    .building-video-wrap  { width: 85%; max-width: 340px; }
+    .slider-arrow        { display: none; }
+    .card-item           { flex: 0 0 280px; height: 360px; }
+    .info-grid-container { grid-template-columns: 1fr; gap: 40px; }
+    .contact-container   { grid-template-columns: 1fr; gap: 40px; }
+    .contact-section     { padding: 70px 20px; }
+    .map-wrapper         { height: 320px; }
+    .contact-intro       { max-width: 100%; }
+    .back-to-top         { width: 44px; height: 44px; bottom: 20px; right: 20px; }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1                   { letter-spacing: 3px; }
+    .welcome-banner.floating-banner    { margin-top: 0; }
+    .building-video-wrap                { width: 90%; }
+    .card-item                         { flex: 0 0 260px; height: 330px; }
+    .main-video-placeholder            { height: 260px; }
+}
+ /* ⚡ სლაიდერის მაუსის მიტანის ეფექტების დაჩქარება და ოპტიმიზაცია */
+        .card-item {
+            transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s ease !important;
+            cursor: pointer;
+        }
+        .card-item:hover {
+            transform: scale(1.03) !important;
+        }
+        .slider-arrow {
+            transition: all 0.2s ease !important;
+        }
+        
+        /* 🌟 საათების პირველადი დიზაინის შენარჩუნება კურსორის შეცვლით */
+        .schedule-item {
+            cursor: pointer;
+        }
+
+        /* იუთუბის ვიდეოს სრული ადაპტაცია კონტეინერზე და გვერდითა ზოლების მოჭრა */
+        .building-video-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            pointer-events: none;
+            transform: scale(1.3);
+        }
