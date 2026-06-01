@@ -281,13 +281,14 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             iframe.setAttribute('allowfullscreen', 'true');
             iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = '0';
-            iframe.style.borderRadius = 'inherit';
+
+            // შეფუთვა video-container კლასში სითხისთვის
+            const container = document.createElement('div');
+            container.className = 'video-container';
+            container.appendChild(iframe);
 
             el.innerHTML = '';
-            el.appendChild(iframe);
+            el.appendChild(container);
             el.style.display = 'block';
             el.style.background = '#000';
             el.removeAttribute('role');

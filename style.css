@@ -1,10 +1,18 @@
-﻿/* ==========================================================================
-   RESET & BASE
+/* ==========================================================================
+   FONTS & RESET & BASE
    ========================================================================== */
+@font-face {
+    font-family: 'CustomGeorgianFont';
+    src: url('fonts/font-file.woff2') format('woff2'),
+         url('fonts/font-file.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 :root {
@@ -30,14 +38,17 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
-    font-family: 'Noto Sans Georgian', 'Montserrat', sans-serif;
+    font-family: 'CustomGeorgianFont', 'Noto Sans Georgian', 'Montserrat', sans-serif;
     background-color: var(--bg-light);
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
 }
 
 img { max-width: 100%; display: block; }
@@ -685,10 +696,49 @@ ul  { list-style: none; }
     color: var(--dark-900);
     text-transform: uppercase;
 }
+/* Global video responsive lock */
+iframe, video {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+/* Map exceptions to prevent scale issues */
+.contact-map-iframe,
+.large-map-iframe {
+    aspect-ratio: auto !important;
+    height: 100% !important;
+}
+
+/* Responsive video wrapper implementation */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 30px; 
+    height: 0; 
+    overflow: hidden;
+    width: 100%;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .video-placeholder,
-.main-video-placeholder {
+.main-video-placeholder,
+.camp-video-placeholder {
     background-color: #f0f0f0;
-    height: 200px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -699,9 +749,11 @@ ul  { list-style: none; }
     border-radius: var(--radius-md);
     box-shadow: 0 8px 24px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 .video-placeholder:hover,
-.main-video-placeholder:hover {
+.main-video-placeholder:hover,
+.camp-video-placeholder:hover {
     transform: scale(1.02);
     background-color: #ede3c4;
     color: var(--dark-900);
@@ -729,7 +781,6 @@ ul  { list-style: none; }
 }
 .video-container-box { max-width: 750px; margin: 0 auto; }
 .main-video-placeholder {
-    height: 400px;
     background-color: var(--dark-900);
     box-shadow: 0 25px 50px rgba(0,0,0,0.3);
     font-size: 44px;
@@ -964,6 +1015,23 @@ ul  { list-style: none; }
 }
 
 /* ==========================================================================
+   RESPONSIVE TWO COLUMNS SYSTEM
+   ========================================================================== */
+.responsive-two-col {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 50px;
+    align-items: stretch;
+}
+
+@media (max-width: 991px) {
+    .responsive-two-col {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+}
+
+/* ==========================================================================
    RESPONSIVE (მობილური სექცია ხელუხლებელია, აკორდეონები მუშაობს გამართულად)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -1079,7 +1147,7 @@ ul  { list-style: none; }
     .info-grid-container { grid-template-columns: 1fr; gap: 40px; }
     .contact-container   { grid-template-columns: 1fr; gap: 40px; }
     .contact-section     { padding: 70px 20px; }
-    .map-wrapper         { height: 320px; }
+    .map-wrapper         { height: 300px; }
     .contact-intro       { max-width: 100%; }
     .back-to-top         { width: 44px; height: 44px; bottom: 20px; right: 20px; }
 }
