@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dropdownLinks = navMenu.querySelectorAll('.has-dropdown > a');
         dropdownLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 1163) {
                     e.preventDefault(); // არ გადავიდეს ლინკზე
                     const parentLi = link.parentElement;
 

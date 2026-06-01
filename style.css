@@ -1298,3 +1298,149 @@ iframe, video {
 .schedule-item {
     cursor: pointer;
 }
+
+/* ==========================================================================
+   შიდა გვერდების კონტენტის შევიწროება (Capture.jpg-ის მიხედვით)
+   ========================================================================== */
+
+/* ვრცელდება მხოლოდ შიდა გვერდების (სადაც <main> ელემენტია) კონტენტზე */
+main .responsive-two-col,
+main .info-grid-container,
+main .single-leader-section .container,
+main .team-asymmetric-layout,
+main .goals-list,
+main .counseling-text-content,
+main section:not(.hero-section):not(.contact-section) .container {
+    max-width: 1340px !important; /* ზღუდავს მაქსიმალურ სიგანეს ფოტოს მსგავსად */
+    margin-left: auto !important;  /* აცენტრებს კონტენტს მარცხნიდან */
+    margin-right: auto !important; /* აცენტრებს კონტენტს მარჯვნიდან */
+    padding-left: 40px !important;  /* ქმნის შიდა დამცავ დაშორებას */
+    padding-right: 40px !important; /* ქმნის შიდა დამცავ დაშორებას */
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* სპეციალური თავსებადობა პლანშეტებისა და მობილურებისთვის */
+@media (max-width: 991px) {
+    main .responsive-two-col,
+    main .info-grid-container,
+    main .single-leader-section .container,
+    main .team-asymmetric-layout,
+    main section:not(.hero-section):not(.contact-section) .container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+/* ==========================================================================
+   BREAKPOINT FIX: მობილური ნავბარის ჩართვა 1063px სიგანეზე ან დაბალზე
+   ========================================================================== */
+
+@media (max-width: 1163px) {
+    /* ბურგერ ღილაკის გამოჩენა */
+    .hamburger {
+        display: flex !important;
+    }
+
+    /* დესკტოპის სოციალური ხატულების დამალვა */
+    .header-socials {
+        display: none !important;
+    }
+
+    /* ნავბარის მენიუს გადაყვანა გვერდითა ჩამოსაშლელ რეჟიმზე */
+    .nav-menu {
+        display: none;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 300px !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        background: rgba(17, 17, 17, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 100px 30px 40px !important;
+        z-index: 1050 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow-y: auto !important;
+    }
+    
+    /* მენიუს გახსნის კლასი */
+    .nav-menu.open { 
+        display: flex !important; 
+        transform: translateX(0) !important; 
+    }
+    
+    /* ლინკების სიის ვერტიკალური განლაგება */
+    .nav-list {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 15px !important;
+    }
+    
+    .nav-list > li {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    .nav-list a {
+        font-size: 16px !important;
+        padding: 10px 0 !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    /* ჰოვერის ხაზის გათიშვა */
+    .nav-list > li > a::after {
+        display: none !important;
+    }
+
+    /* მობილური ჩამოსაშლელი (Dropdown) მენიუების სტილი */
+    .dropdown-menu {
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: none !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        box-shadow: none !important;
+        border-top: none !important;
+        border-left: 2px solid var(--gold) !important;
+        padding: 5px 0 5px 15px !important;
+        margin-top: 5px !important;
+        min-width: 100% !important;
+        border-radius: 4px !important;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 10px !important;
+        color: rgba(255, 255, 255, 0.75) !important;
+    }
+
+    /* აკორდეონის პრინციპით გახსნა */
+    .has-dropdown.dropdown-open .dropdown-menu {
+        display: block !important;
+    }
+
+    .has-dropdown.dropdown-open > a > i {
+        transform: rotate(180deg) !important;
+        color: var(--gold) !important;
+    }
+
+    /* "გაეცი" ღილაკის მორგება მობილურის სიგანეზე */
+    .nav-give-item {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 15px !important;
+    }
+
+    .btn-nav-give {
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 12px 0 !important;
+    }
+}
