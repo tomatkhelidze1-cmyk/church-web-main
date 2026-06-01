@@ -2,12 +2,31 @@
    FONTS & RESET & BASE
    ========================================================================== */
 @font-face {
+    font-family: 'MersadBold';
+    src: url('fonts/Mersad Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* 2. ფონტის მინიჭება ჰედერის (ნავბარის) ყველა ლინკისთვის */
+.nav-list a {
+    font-family: 'MersadBold', sans-serif !important;
+}
+
+/* 3. ფონტის მინიჭება მობილური მენიუს ჩამოსაშლელი ლინკებისთვისაც */
+.dropdown-menu a {
+    font-family: 'MersadBold', sans-serif !important;
+}
+  
+/*ძველი ფონტი
+@font-face {
     font-family: 'CustomGeorgianFont';
     src: url('fonts/font-file.woff2') format('woff2'),
          url('fonts/font-file.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
+    */
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -141,7 +160,7 @@ ul {
 .nav-list a {
     color: var(--white);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -222,7 +241,7 @@ ul {
 .dropdown-menu a {
     color: rgba(255, 255, 255, 0.85);
     text-transform: none;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     padding: 10px 20px 10px 14px;
     display: block;
@@ -1159,7 +1178,7 @@ iframe, video {
     }
     
     .nav-list a {
-        font-size: 16px;
+        font-size: 17px;
         padding: 10px 0;
         width: 100%;
         justify-content: space-between;
