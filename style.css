@@ -1499,3 +1499,22 @@ main section:not(.hero-section):not(.contact-section) .container {
     background: #aa954f !important; /* სრული ოქროსფერი ჰოვერზე */
     box-shadow: 0 15px 30px rgba(170, 149, 79, 0.5);
 }
+
+/* 🌟 ვიდეოს დამცავი კონტეინერი */
+.building-video-wrap {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* 🌟 უხილავი ფენა, რომელიც ეფარება იუთუბს და ბლოკავს ნებისმიერ მაუსის ინტერაქციას */
+.building-video-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: transparent; /* სრულიად უხილავია */
+    pointer-events: auto;    /* იჭერს ყველა კლიკს თავის თავზე */
+}
