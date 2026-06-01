@@ -270,12 +270,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ──────────────────────────────────────────────
-    // 6. VIDEO PLACEHOLDERS - ინტერაქტიული YouTube ფლეიერი
+   // ──────────────────────────────────────────────
+    // 6. VIDEO PLACEHOLDERS - ინტერაქტიული YouTube ფლეიერი და Thumbnail-ები
     // ──────────────────────────────────────────────
     const setupVideoClick = (el) => {
+        const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
+        
+        /* 🌟 ავტომატურად ვსვამთ იუთუბის ორიგინალ მაღალი ხარისხის სურათს (hqdefault ან maxresdefault) */
+        el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg')`;
+        el.style.backgroundSize = 'cover';
+        el.style.backgroundPosition = 'center';
+        el.style.position = 'relative';
+
         el.addEventListener('click', () => {
-            const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
             const iframe = document.createElement('iframe');
             iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`);
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');

@@ -1444,3 +1444,39 @@ main section:not(.hero-section):not(.contact-section) .container {
         padding: 12px 0 !important;
     }
 }
+
+/* 🌟 იუთუბის ქავერების ვიზუალური ეფექტები */
+.video-placeholder,
+.main-video-placeholder,
+.camp-video-placeholder {
+    background-color: #111 !important; /* ნაცრისფერის ნაცვლად მუქი ბაზა */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Play ხატულის გამოკვეთა სურათის თავზე */
+.video-placeholder i,
+.main-video-placeholder i,
+.camp-video-placeholder i {
+    z-index: 3;
+    font-size: 4rem !important;
+    color: #ffffff !important;
+    background: rgba(170, 149, 79, 0.85); /* ეკლესიის ოქროსფერი გამჭვირვალე წრე */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* მაუსის მიტანისას ღილაკის ანიმაცია */
+.video-placeholder:hover i,
+.main-video-placeholder:hover i,
+.camp-video-placeholder:hover i {
+    transform: scale(1.1);
+    background: #aa954f !important; /* სრული ოქროსფერი ჰოვერზე */
+    box-shadow: 0 15px 30px rgba(170, 149, 79, 0.5);
+}
