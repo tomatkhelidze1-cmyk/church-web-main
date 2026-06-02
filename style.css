@@ -327,6 +327,9 @@ ul {
     align-items: center;
     justify-content: center;
     text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 118px 20px 36px;
 }
 
 .hero-overlay {
@@ -338,7 +341,11 @@ ul {
 .hero-content {
     position: relative;
     color: var(--white);
-    padding: 20px;
+    width: min(100%, 1100px);
+    max-height: 100%;
+    padding: 0 20px;
+    z-index: 1;
+    overflow-wrap: anywhere;
 }
 
 .hero-content h1 {
@@ -346,6 +353,7 @@ ul {
     letter-spacing: 6px;
     text-shadow: 0 4px 25px rgba(0,0,0,0.3);
     margin-bottom: 16px;
+    line-height: 1.12;
 }
 
 .cursive-text {
@@ -354,6 +362,14 @@ ul {
     font-size: clamp(1.5rem, 4vw, 2.4rem);
     color: #e2d7b5;
     margin-bottom: 40px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 992px) {
+    /* ეს წაშლის მთლიან ლურჯ სექციას (ქადაგებასაც და კვირის განრიგსაც ერთად) */
+    body.hide-sermon-page .sidebar-content-wrapper {
+        display: none !important;
+    }
 }
 
 .btn-hero {
@@ -1100,6 +1116,30 @@ iframe, video {
     .map-wrapper         { height: 420px; }
 }
 
+@media (max-width: 991px) {
+    .scroll-reveal:has(.camp-video-placeholder) {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .camp-video-placeholder {
+        display: flex !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: 230px !important;
+        box-sizing: border-box !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        width: 100% !important;
+        min-height: 230px !important;
+    }
+}
+
 @media (max-width: 768px) {
     /* Forced Flex/Grid Collapse for Columns */
     .welcome-container,
@@ -1133,12 +1173,33 @@ iframe, video {
     .video-container, 
     .video-container iframe,
     .video-container video,
+    .camp-video-placeholder,
+    .camp-video-placeholder iframe,
+    .camp-video-placeholder video,
     iframe, 
     video, 
     img {
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
+    }
+
+    .scroll-reveal:has(.camp-video-placeholder) {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .camp-video-placeholder {
+        aspect-ratio: 16 / 9 !important;
+        min-height: 210px !important;
+        height: auto !important;
+        margin-bottom: 0 !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        min-height: 210px !important;
     }
 
     .nav-menu {
@@ -1233,7 +1294,25 @@ iframe, video {
 
     .hamburger       { display: flex; }
     .header-socials  { display: none; }
-    .hero-section    { height: 100svh; }
+    .hero-section {
+        height: 100svh;
+        min-height: 420px;
+        padding: 104px 18px 34px;
+    }
+
+    .hero-content {
+        padding: 0 10px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+        letter-spacing: 3px;
+    }
+
+    .cursive-text {
+        font-size: clamp(1.15rem, 5vw, 1.7rem);
+        margin-bottom: 24px;
+    }
 
     .welcome-banner.floating-banner {
         margin-top: -40px;
@@ -1286,6 +1365,9 @@ iframe, video {
     .video-container, 
     .video-container iframe,
     .video-container video,
+    .camp-video-placeholder,
+    .camp-video-placeholder iframe,
+    .camp-video-placeholder video,
     iframe, 
     video, 
     img {
@@ -1294,7 +1376,19 @@ iframe, video {
         box-sizing: border-box !important;
     }
 
-    .hero-content h1                   { letter-spacing: 3px; }
+    .camp-video-placeholder {
+        min-height: 190px !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        min-height: 190px !important;
+    }
+
+    .hero-section {
+        min-height: 380px;
+        padding: 96px 14px 28px;
+    }
+    .hero-content h1                   { letter-spacing: 2px; }
     .welcome-banner.floating-banner    { margin-top: 0; }
     .building-video-wrap                { width: 90%; }
     .card-item                         { flex: 0 0 260px; height: 330px; }
