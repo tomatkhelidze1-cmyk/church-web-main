@@ -95,6 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ──────────────────────────────────────────────
     // 4. CARD SLIDER (მკაცრი დაცვა: ერთი დრაგი = მაქსიმუმ ერთი ქარდი)
     // ──────────────────────────────────────────────
+// ──────────────────────────────────────────────
+    // 4. CARD SLIDER (მკაცრი დაცვა: ერთი დრაგი = მაქსიმუმ ერთი ქარდი)
+    // ──────────────────────────────────────────────
     const track      = document.querySelector('.slider-track');
     const container  = document.querySelector('.slider-container');
     const arrowLeft  = document.querySelector('.arrow-left');
@@ -168,17 +171,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const { itemWidth } = getItemMetrics();
             const diff = e.clientX - startX;
 
-            // თუ დრაგის მანძილმა გადააჭარბა ლიმიტს, გადაგყავს ზუსტად 1 ქარდით და თიშავს დრაგს ივენთის გაშვებამდე
             if (diff > DRAG_THRESHOLD) {
                 targetX = storedX + itemWidth;
-                isDragging = false; // ჩაკეტვა: აღარ აძლევს უფლებას კოორდინატებს, რომ გაიზარდონ
+                isDragging = false; 
                 snapToNearest();
             } else if (diff < -DRAG_THRESHOLD) {
                 targetX = storedX - itemWidth;
-                isDragging = false; // ჩაკეტვა
+                isDragging = false; 
                 snapToNearest();
             } else {
-                // მცირე მოძრაობისას მიყვება მაუსს გლუვად, სანამ ლიმიტს არ მიაღწევს
                 targetX = storedX + diff;
             }
         });
@@ -192,34 +193,43 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDragging) { isDragging = false; snapToNearest(); }
         });
 
-        // თაჩ დრაგი მობილურისთვის ანალოგიური ჩამკეტით
-        let touchStartX = 0, touchStoredX = 0;
+        // 🌟 თაჩ დრაგი მობილურისთვის ოპტიმიზებული სქროლის ბლოკით (ახალი კოდი სწორ ადგილას)
+        let touchStartX = 0, touchStartY = 0, touchStoredX = 0; 
         let isTouchDragging = false;
 
         container.addEventListener('touchstart', (e) => {
             isTouchDragging = true;
             touchStartX  = e.touches[0].clientX;
+            touchStartY  = e.touches[0].clientY; 
             touchStoredX = targetX;
         }, { passive: true });
 
         container.addEventListener('touchmove', (e) => {
             if (!isTouchDragging) return;
             
+            const diffX = e.touches[0].clientX - touchStartX;
+            const diffY = e.touches[0].clientY - touchStartY;
+
+            // თუ მომხმარებელი უფრო მეტად გვერდზე სქროლავს, ვიდრე ზემოთ/ქვემოთ
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (e.cancelable) e.preventDefault(); // ვბლოკავთ გვერდის ზემოთ/ქვემოთ გაქცევას
+            }
+
             const { itemWidth } = getItemMetrics();
-            const diff = e.touches[0].clientX - touchStartX;
+            const diff = diffX; 
 
             if (diff > DRAG_THRESHOLD) {
                 targetX = touchStoredX + itemWidth;
-                isTouchDragging = false; // ჩაკეტვა
+                isTouchDragging = false; 
                 snapToNearest();
             } else if (diff < -DRAG_THRESHOLD) {
                 targetX = touchStoredX - itemWidth;
-                isTouchDragging = false; // ჩაკეტვა
+                isTouchDragging = false; 
                 snapToNearest();
             } else {
                 targetX = touchStoredX + diff;
             }
-        }, { passive: true });
+        }, { passive: false }); // აუცილებელია false, რომ ბრაუზერმა სქროლის ბლოკირება მოგვცეს
 
         container.addEventListener('touchend', () => {
             isTouchDragging = false;
@@ -251,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
         }
         animate();
-    }
+    } // <─── აი აქ იხურება სლაიდერის მთავარი ბლოკი იდეალურად!
 
 
     // ──────────────────────────────────────────────

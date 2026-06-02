@@ -1589,6 +1589,23 @@ main section:not(.hero-section):not(.contact-section) .container {
     .mobile-socials a.fb-icon:hover    { color: #1877f2 !important; }
     .mobile-socials a.insta-icon:hover { color: #e1306c !important; }
     .mobile-socials a.yt-icon:hover    { color: #ff0000 !important; }
+    /* 🌟 მშობელ ბლოკს ვაბრუნებთ მარცხენა მხარეს, სადაც თავიდანვე იყო */
+    .nav-menu .nav-list li.nav-give-item {
+        display: flex !important;
+        justify-content: flex-start !important; /* აბრუნებს მარცხნივ */
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 20px !important;
+    }
+
+    /* 🌟 ღილაკს ვუკუმშავთ სიგანეს, რომ ოქროსფერი ფონი მთელ ეკრანზე არ გაიწელოს */
+    .nav-menu .nav-list li.nav-give-item a.btn-nav-give {
+        width: fit-content !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+        padding: 8px 18px !important; /* ნარჩუნდება დესკტოპის ორიგინალი ზომა */
+        text-align: center !important;
+    }
 }
 
 /* 🌟 იუთუბის ქავერების ვიზუალური ეფექტები */
