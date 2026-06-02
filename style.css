@@ -142,6 +142,10 @@ ul {
     transition: opacity 0.3s;
 }
 .logo a:hover { opacity: 0.8; }
+.dropdown-menu {
+    /* ... სხვა კოდი უცვლელია ... */
+    min-width: 270px; /* 240-ის ნაცვლად ვზრდით 270-მდე, რომ გრძელი ტექსტი ჩაეტიოს */
+}
 
 /* ნავ სიის სტილები */
 .nav-list {
@@ -170,6 +174,12 @@ ul {
     gap: 6px;
     position: relative;
     transition: color 0.3s;
+}
+.dropdown-menu a:hover {
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 18px;
+    white-space: nowrap; /* უკრძალავს ტექსტს მომდევნო ხაზზე გადასვლას */
 }
 
 .nav-list > li > a::after {
@@ -1556,6 +1566,29 @@ main section:not(.hero-section):not(.contact-section) .container {
         justify-content: center !important;
         padding: 12px 0 !important;
     }
+    /* 🌟 მობილურის ეკრანზე ვაჩენთ ხატულებს ბურგერ მენიუს ბოლოში */
+    .mobile-socials {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        width: 100%;
+        margin-top: 40px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* დახვეწილი გამყოფი ხაზი */
+    }
+
+    .mobile-socials a {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 22px !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease;
+    }
+
+    /* ფერების ეფექტები მობილურზე დაჭერისას */
+    .mobile-socials a.fb-icon:hover    { color: #1877f2 !important; }
+    .mobile-socials a.insta-icon:hover { color: #e1306c !important; }
+    .mobile-socials a.yt-icon:hover    { color: #ff0000 !important; }
 }
 
 /* 🌟 იუთუბის ქავერების ვიზუალური ეფექტები */
@@ -1611,4 +1644,9 @@ main section:not(.hero-section):not(.contact-section) .container {
     z-index: 10;
     background: transparent; /* სრულიად უხილავია */
     pointer-events: auto;    /* იჭერს ყველა კლიკს თავის თავზე */
+}
+
+/* დესკტოპ ვერსიაზე მენიუს შიგნით არსებული ხატულები დამალულია */
+.mobile-socials {
+    display: none;
 }
