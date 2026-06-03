@@ -812,54 +812,6 @@ ul {
     background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 100%);
 }
 
-/* ── მობილური სლაიდერის ადაპტაცია (მხოლოდ ტელეფონი) ── */
-@media (max-width: 768px) {
-    .slider-container.floating-slider {
-        padding-bottom: 50px;
-        touch-action: pan-y;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .slider-track {
-        padding: 20px 8vw;
-    }
-
-    .card-item {
-        /* ბარათი ეკრანის ~80%-ია, რომ გვერდიდან შემდეგი ბარათი მოჩანდეს */
-        flex: 0 0 80vw;
-        max-width: 340px;
-        height: 360px;
-        margin: 0 8px;
-    }
-
-    /* ცენტრში მყოფი ბარათის მსუბუქი ასვლა — JS ამატებს .is-center კლასს */
-    .card-item.is-center {
-        transform: translateY(-10px) scale(1.03) !important;
-        box-shadow: 0 35px 65px rgba(0,0,0,0.5) !important;
-    }
-    .card-item.is-center::before {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.65) 100%);
-    }
-
-    /* მობილურზე ისრები იმალება — სვაიპი საკმარისია */
-    .slider-arrow {
-        display: none !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .card-item {
-        flex: 0 0 82vw;
-        height: 320px;
-        margin: 0 6px;
-    }
-
-    .slider-track {
-        padding: 20px 6vw;
-    }
-}
-
 .card-content {
     position: relative;
     z-index: 2;
