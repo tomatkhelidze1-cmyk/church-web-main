@@ -193,48 +193,97 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDragging) { isDragging = false; snapToNearest(); }
         });
 
-        // 🌟 თაჩ დრაგი მობილურისთვის ოპტიმიზებული სქროლის ბლოკით (ახალი კოდი სწორ ადგილას)
-        let touchStartX = 0, touchStartY = 0, touchStoredX = 0; 
-        let isTouchDragging = false;
+        // 🌟 Touch drag – vertical-scroll lock version
+        // Strategy: on touchstart we record both axes. On the first touchmove we
+        // decide the dominant direction. If horizontal → preventDefault() on every
+        // subsequent move so the page never scrolls. If vertical → release control
+        // back to the browser so normal page scrolling works.
+        let touchStartX  = 0, touchStartY  = 0, touchStoredX = 0;
+        let isTouchDragging  = false;
+        let touchLocked      = false;   // true = we own this gesture (horizontal)
+        let touchDirectionSet = false;  // true = direction decided for this gesture
 
         container.addEventListener('touchstart', (e) => {
-            isTouchDragging = true;
+            isTouchDragging   = true;
+            touchDirectionSet = false;
+            touchLocked       = false;
             touchStartX  = e.touches[0].clientX;
-            touchStartY  = e.touches[0].clientY; 
+            touchStartY  = e.touches[0].clientY;
             touchStoredX = targetX;
-        }, { passive: true });
+        }, { passive: true }); // passive:true is fine here – we don't need to prevent default on start
 
         container.addEventListener('touchmove', (e) => {
             if (!isTouchDragging) return;
-            
+
             const diffX = e.touches[0].clientX - touchStartX;
             const diffY = e.touches[0].clientY - touchStartY;
 
-            // თუ მომხმარებელი უფრო მეტად გვერდზე სქროლავს, ვიდრე ზემოთ/ქვემოთ
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (e.cancelable) e.preventDefault(); // ვბლოკავთ გვერდის ზემოთ/ქვემოთ გაქცევას
+            // Decide direction once (when we have a meaningful move of ≥4px)
+            if (!touchDirectionSet && (Math.abs(diffX) > 4 || Math.abs(diffY) > 4)) {
+                touchDirectionSet = true;
+                touchLocked = Math.abs(diffX) >= Math.abs(diffY);
+            }
+
+            if (touchLocked) {
+                // Horizontal swipe → prevent page from scrolling up/down
+                if (e.cancelable) e.preventDefault();
+            } else {
+                // Vertical swipe → let the page scroll, abandon slider drag
+                isTouchDragging = false;
+                return;
             }
 
             const { itemWidth } = getItemMetrics();
-            const diff = diffX; 
 
-            if (diff > DRAG_THRESHOLD) {
+            if (diffX > DRAG_THRESHOLD) {
                 targetX = touchStoredX + itemWidth;
-                isTouchDragging = false; 
+                isTouchDragging = false;
                 snapToNearest();
-            } else if (diff < -DRAG_THRESHOLD) {
+            } else if (diffX < -DRAG_THRESHOLD) {
                 targetX = touchStoredX - itemWidth;
-                isTouchDragging = false; 
+                isTouchDragging = false;
                 snapToNearest();
             } else {
-                targetX = touchStoredX + diff;
+                targetX = touchStoredX + diffX;
             }
-        }, { passive: false }); // აუცილებელია false, რომ ბრაუზერმა სქროლის ბლოკირება მოგვცეს
+        }, { passive: false }); // Must be non-passive to call preventDefault()
 
         container.addEventListener('touchend', () => {
-            isTouchDragging = false;
+            isTouchDragging   = false;
+            touchDirectionSet = false;
+            touchLocked       = false;
             snapToNearest();
         });
+
+        // ── Center-card lift (მხოლოდ მობილურზე) ──────────────────────────
+        function updateCenterCard() {
+            // დესკტოპზე არ ვამუშავებთ
+            if (window.innerWidth > 768) {
+                track.querySelectorAll('.card-item.is-center').forEach(c => c.classList.remove('is-center'));
+                return;
+            }
+
+            const vpCenter = window.innerWidth / 2;
+            let closestCard = null;
+            let closestDist = Infinity;
+
+            track.querySelectorAll('.card-item').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const dist = Math.abs(cardCenter - vpCenter);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestCard = card;
+                }
+            });
+
+            track.querySelectorAll('.card-item.is-center').forEach(c => {
+                if (c !== closestCard) c.classList.remove('is-center');
+            });
+            if (closestCard && !closestCard.classList.contains('is-center')) {
+                closestCard.classList.add('is-center');
+            }
+        }
 
         // ისრების ფუნქციონალი
         if (arrowLeft) {
@@ -258,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentX > pad)                    { targetX -= totalWidth; currentX -= totalWidth; }
             if (currentX < -(totalWidth * 2) + pad){ targetX += totalWidth; currentX += totalWidth; }
             track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+            updateCenterCard();
             requestAnimationFrame(animate);
         }
         animate();
