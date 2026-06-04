@@ -1,14 +1,20 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ka">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ვინ ვართ ჩვენ – სახარების რწმენის ეკლესია – ქუთაისი">
-    <title>ვინ ვართ ჩვენ – სახარების რწმენის ეკლესია</title>
+    <title>ვინ ვართ ჩვენ – სახარების რწმენის ეკლესიის მრწამსი</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <style>
+        .creed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(170, 149, 79, 0.08) !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -40,8 +46,6 @@
 
 <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
     <ul class="nav-list">
-        <li><a href="../index.html">მთავარი</a></li>
-        
         <li class="has-dropdown">
             <a href="#" aria-haspopup="true" aria-expanded="false">
                 ჩვენს შესახებ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
@@ -59,6 +63,7 @@
             <ul class="dropdown-menu">
                 <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
                 <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                <li><a href="registration.html">რეგისტრაცია</a></li>
             </ul>
         </li>
 
@@ -75,7 +80,17 @@
             </ul>
         </li>
 
-        <li><a href="registration.html">რეგისტრაცია</a></li>
+        <li class="has-dropdown">
+            <a href="#" aria-haspopup="true" aria-expanded="false">
+                რესურსები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="https://holybible.ge/geo/bible/%E1%83%90%E1%83%AE%E1%83%90%E1%83%9A%E1%83%98-%E1%83%92%E1%83%90%E1%83%93%E1%83%90%E1%83%9B%E1%83%A3%E1%83%A8%E1%83%90%E1%83%95%E1%83%94%E1%83%91%E1%83%A3%E1%83%9B%E1%83%A5-%E1%83%92%E1%83%9B%E1%83%9D%E1%83%AA%E1%83%94%E1%83%9B%E1%83%90-2015/1/0/0/0/1" target="_blank" rel="noopener noreferrer">ონლაინ ბიბლია</a></li>
+                <li><a href="https://live.bible.is/bible/KATGNT/MAT/1" target="_blank" rel="noopener noreferrer">აუდიო ბიბლია</a></li>
+                <li><a href="sermons.html">ქადაგებები</a></li>
+            </ul>
+        </li>
+
         <li><a href="contact.html">დაგვიკავშირდი</a></li>
         <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
     </ul>
@@ -107,9 +122,21 @@
         </div>
     </header>
 
+    <!-- გვერდითი მინი-ნავიგატორი (Floating Side Nav) -->
+    <nav class="side-dots-nav" aria-label="გვერდის ნავიგაცია">
+        <ul>
+            <li><a href="#about-hero" class="dot-nav-item active" data-title="შესავალი"><span>შესავალი</span></a></li>
+            <li><a href="#about-history" class="dot-nav-item" data-title="ისტორია"><span>ისტორია</span></a></li>
+            <li><a href="#about-creed" class="dot-nav-item" data-title="მრწამსი"><span>მრწამსი</span></a></li>
+            <li><a href="#about-vision" class="dot-nav-item" data-title="ხედვა & მისია"><span>ხედვა & მისია</span></a></li>
+            <li><a href="#about-values" class="dot-nav-item" data-title="ფასეულობები"><span>ფასეულობები</span></a></li>
+            <li><a href="#contact" class="dot-nav-item" data-title="კონტაქტი"><span>კონტაქტი</span></a></li>
+        </ul>
+    </nav>
+
     <main role="main">
 
-        <section class="hero-section" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
+        <section id="about-hero" class="hero-section" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
             <div class="hero-overlay" aria-hidden="true"></div>
             <div class="hero-content">
                 <h1>ვინ ვართ ჩვენ</h1>
@@ -117,76 +144,162 @@
             </div>
         </section>
 
-        <section class="info-grid-section" style="padding: 80px 0 40px 0;" aria-label="Our Heritage and Schedule">
+        <section id="about-history" class="info-grid-section reveal-section" style="padding: 80px 0 30px 0;" aria-label="Our Heritage and Schedule">
             <div class="info-grid-container">
                 
-                <div class="left-column" style="flex: 1.2; min-width: 320px; background: #fdfbf7; padding: 40px; border-radius: 8px; border-left: 4px solid #aa954f; box-shadow: 0 5px 20px rgba(0,0,0,0.02); box-sizing: border-box;">
-                    <span class="grid-uppertitle" style="color: #aa954f; display: block; margin-bottom: 5px;">ადგილობრივი მემკვიდრეობა</span>
-                    <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.6rem; margin-top: 5px; margin-bottom: 15px; color: #222;">ქუთაისის სახარების რწმენის ეკლესიის ისტორია</h3>
-                    <p style="color: #555; line-height: 1.7; margin-bottom: 15px; text-align: justify;">ქუთაისის სახარების რწმენის ეკლესიას აქვს მდიდარი და შთამაგონებელი სულიერი გზა. ადგილობრივი მსახურება წლების წინ დაიწყო მცირე ჯგუფით, რომელთაც ჰქონდათ დიდი ხედვა და რწმენა ქალაქის გამოღვიძებისა და სულიერი წინსვლისთვის.</p>
-                    <p style="color: #555; line-height: 1.7; text-align: justify; margin-bottom: 0;">მიუხედავად სხვადასხვა პერიოდის გამოწვევებისა, ეკლესია მყარად იდგა სახარებისეულ ფასეულობებზე. დღეს ქუთაისის მსახურება წარმოადგენს ცოცხალ, სიყვარულით სავსე თემს, რომელიც აქტიურად ემსახურება ადამიანების სულიერ გაძლიერებას, საქველმოქმედო ინიციატივებსა და მომავალი თაობების ქრისტიანულ აღზრდას იმერეთის რეგიონში.</p>
-                </div>
-                
-            <div class="right-column">
-                <h3 class="bullet-title">ბოლო ქადაგება</h3>
-                <div class="video-placeholder" role="button" tabindex="0" aria-label="უყურეთ ბოლო ქადაგებას" data-video-id="-yhiipmNtMA">
-                    <i class="fa-solid fa-play" aria-hidden="true"></i>
-                </div>
-                <h3 class="bullet-title">ამ კვირაში</h3>
-                <ul class="week-schedule" aria-label="Weekly schedule">
-                    <li><strong>კვირა 11:00</strong><span>პირველი მსახურება</span></li>
-                    <li><strong>შაბათი 16:00</strong><span>მეორე მსახურება</span></li>
-                    <li><strong>ოთხშაბათი 19:00</strong><span>საოჯახო ჯგუფები, ბავშვები, ახალგაზრდები</span></li>
-                </ul>
-            </div>
-
-            </div>
-        </section>
-
-        <section class="info-grid-section" style="padding: 60px 0; background-color: #f9f9f9;" aria-label="Vision and Mission">
-            <div class="info-grid-container" style="display: flex; gap: 40px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <div style="color: #aa954f; font-size: 2rem; margin-bottom: 15px;"><i class="fa-solid fa-eye"></i></div>
-                    <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 15px; color: #222;">ჩვენი ხედვა</h3>
-                    <p style="color: #666; line-height: 1.6;">ვიხილოთ ადამიანები, რომლებიც შეცვლილნი არიან სახარების მადლით, იზრდებიან ქრისტეს მოწაფეებად და ახდენენ პოზიტიურ გავლენას საკუთარ ოჯახებზე, ქალაქსა და მთელ მსოფლიოზე.</p>
-                </div>
-                
-                <div style="flex: 1; min-width: 300px; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <div style="color: #aa954f; font-size: 2rem; margin-bottom: 15px;"><i class="fa-solid fa-bullseye"></i></div>
-                    <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 15px; color: #222;">ჩვენი მისია</h3>
-                    <p style="color: #666; line-height: 1.6;">მივიტანოთ ქრისტეს სიყვარული და ბიბლიური ჭეშმარიტება თითოეულ ადამიანამდე, შევქმნათ თბილი, მზრუნველი გარემო და ხელი შევუწყოთ სულიერ აღმშენებლობასა და თაობების სწორად აღზრდას.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="info-grid-section" style="padding: 80px 0 40px 0;" aria-label="Core Values">
-            <div class="info-grid-container">
-                <div class="left-column">
-                    <span class="grid-uppertitle">რითი ვხელმძღვანელობთ</span>
-                    <h2>ჩვენი მთავარი <br>ფასეულობები</h2>
-                    <p>ყველაფერი, რასაც ვაკეთებთ — კვირის მსახურებებიდან დაწყებული, საოჯახო ჯგუფებითა და საქველმოქმედო პროექტებით დამთავრებული — ეფუძნება ამ ფუნდამენტურ პრინციპებს.</p>
+                <div class="left-column" style="flex: 1.2; min-width: 280px; background: #fdfbf7; padding: 45px 40px; border-radius: 12px; border-left: 4px solid #aa954f; box-shadow: 0 10px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <span class="grid-uppertitle" style="color: #aa954f; display: block; margin-bottom: 5px;">ადგილობრივი მემკვიდრეობა</span>
+                        <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.6rem; margin-top: 5px; margin-bottom: 15px; color: #222;">ქუთაისის სახარების რწმენის ეკლესიის ისტორია</h3>
+                        <p style="color: #555; line-height: 1.7; margin-bottom: 15px; text-align: justify; font-family: 'Montserrat', sans-serif;">ქუთაისის სახარების რწმენის ეკლესიას აქვს მდიდარი და შთამაგონებელი სულიერი გზა. ადგილობრივი მსახურება წლების წინ დაიწყო მცირე ჯგუფით, რომელთაც ჰქონდათ დიდი ხედვა და რწმენა ქალაქის გამოღვიძებისა და სულიერი წინსვლისთვის.</p>
+                        <p style="color: #555; line-height: 1.7; text-align: justify; margin-bottom: 0; font-family: 'Montserrat', sans-serif;">მიუხედავად სხვადასხვა პერიოდის გამოწვევებისა, ეკლესია მყარად იდგა სახარებისეულ ფასეულობებზე. დღეს ქუთაისის მსახურება წარმოადგენს ცოცხალ, სიყვარულით სავსე თემს, რომელიც აქტიურად ემსახურება ადამიანების სულიერ გაძლიერებას, საქველმოქმედო ინიციატივებსა და მომავალი თაობების ქრისტიანულ აღზრდას იმერეთის რეგიონში.</p>
+                    </div>
+                    <div style="border-top: 1px solid #f3eedf; margin-top: 5px; padding-top: 20px;">
+                        <div style="border-left: 3px solid #aa954f; padding-left: 15px; box-sizing: border-box;">
+                            <p style="color: #666; font-style: italic; font-size: 0.98rem; line-height: 1.65; margin: 0; font-family: 'Montserrat', sans-serif;">"ეკლესია არ არის უბრალოდ შენობა — ეს არის ადამიანთა გულები, რომლებიც გაერთიანებულია ქრისტეს სიყვარულითა და ქალაქის გამოღვიძების საერთო ხედვით."</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="right-column">
-                    <ul class="week-schedule" aria-label="Core values list" style="list-style: none; padding: 0;">
-                        <li style="padding: 20px 0; border-bottom: 1px solid #eee;">
-                            <strong style="display: block; font-size: 1.2rem; color: #aa954f; margin-bottom: 5px;">1. ბიბლიის ავტორიტეტი</strong>
-                            <span style="display: inline; font-size: 1rem; color: #555;">ღვთის სიტყვა არის ჩვენი ცხოვრებისა და რწმენის უზენაესი მეგზური.</span>
-                        </li>
-                        <li style="padding: 20px 0; border-bottom: 1px solid #eee;">
-                            <strong style="display: block; font-size: 1.2rem; color: #aa954f; margin-bottom: 5px;">2. გულწრფელი საზოგადოება</strong>
-                            <span style="display: inline; font-size: 1rem; color: #555;">ჩვენ ვაშენებთ ურთიერთობებს, რომლებიც დაფუძნებულია სიყვარულზე, ნდობასა და მხარდაჭერაზე.</span>
-                        </li>
-                        <li style="padding: 20px 0; border-bottom: 1px solid #eee;">
-                            <strong style="display: block; font-size: 1.2rem; color: #aa954f; margin-bottom: 5px;">3. მსახურება და გაცემა</strong>
-                            <span style="display: inline; font-size: 1rem; color: #555;">ჩვენ მოწოდებულნი ვართ, გამოვიყენოთ ჩვენი ნიჭი და რესურსები სხვების საკეთილდღეოდ.</span>
-                        </li>
+                    <h3 class="bullet-title">ბოლო ქადაგება</h3>
+                    <div class="video-placeholder" role="button" tabindex="0" aria-label="უყურეთ ბოლო ქადაგებას" data-video-id="-yhiipmNtMA">
+                        <i class="fa-solid fa-play" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="bullet-title">ამ კვირაში</h3>
+                    <ul class="week-schedule" aria-label="Weekly schedule">
+                        <li><strong>კვირა 11:00</strong><span>პირველი მსახურება</span></li>
+                        <li><strong>შაბათი 16:00</strong><span>მეორე მსახურება</span></li>
+                        <li><strong>ოთხშაბათი 19:00</strong><span>საოჯახო ჯგუფები, ბავშვები, ახალგაზრდები</span></li>
                     </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <i class="fa-solid fa-cross section-divider-icon"></i>
+        </div>
+
+        <section id="about-creed" class="info-grid-section reveal-section" style="padding: 30px 0 60px 0; background-color: #ffffff;" aria-label="Statement of Faith">
+            <div class="info-grid-container" style="display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+                <div>
+                    <span class="grid-uppertitle" style="color: #aa954f; display: block; margin-bottom: 5px;">მრწამსი</span>
+                    <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 2.2rem; margin-top: 5px; margin-bottom: 0; color: #222; letter-spacing: -0.5px;">სახარების რწმენის ეკლესიის მრწამსი</h2>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 30px; width: 100%; box-sizing: border-box;">
+                    
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-book-open" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>ღვთივსულიერი წერილი</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ჩვენ გვწამს, რომ მთელი ბიბლია (ძველი და ახალი აღთქმა) არის სულიწმინდისგან შთაგონებული წიგნი, რომელიც წარმოადგენს უზენაეს და საბოლოო ავტორიტეტს ჩვენს რწმენასა და ყოველდღიურ ცხოვრებაში.</p>
+                    </div>
+
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-crown" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>ღმერთი</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ჩვენ გვწამს ერთი მარადიული ღმერთის – ყოვლისშემომქმედის, რომელიც ვლინდება როგორც წმინდა სამება: მამა, ძე და სულიწმიდა.</p>
+                    </div>
+
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-cross" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>იესო ქრისტეს ღვთაებრიობა</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ჩვენ გვწამს, რომ იესო არის საუკუნო ღვთის ძე, სრული ადამიანი და სრული ღმერთი, რომელმაც უცოდველად იცხოვრა და გახდა ერთადერთი მსხვერპლი კაცობრიობის ცოდვებისთვის.</p>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <section class="contact-section" id="contact" aria-label="Contact and location">
+        <div class="section-divider">
+            <i class="fa-solid fa-cross section-divider-icon"></i>
+        </div>
+
+        <section id="about-vision" class="info-grid-section reveal-section" style="padding: 60px 0; background-color: #f9f9f9;" aria-label="Vision and Mission">
+            <div class="info-grid-container" style="display: flex; gap: 40px; flex-wrap: wrap; align-items: stretch !important;">
+                
+                <div style="flex: 1; min-width: 280px; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; box-sizing: border-box;">
+                    <div>
+                        <div style="color: #aa954f; font-size: 2rem; margin-bottom: 15px;"><i class="fa-solid fa-eye"></i></div>
+                        <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 15px; color: #222; font-size: 1.4rem;">ჩვენი ხედვა</h3>
+                        <p style="color: #222; line-height: 1.6; font-size: 1.05rem; font-weight: 600; margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">ჩვენ ვართ ეკლესია, რომელსაც უყვარს და ემსახურება.</p>
+                    </div>
+                    <div style="border-left: 3px solid #aa954f; padding-left: 15px; margin-top: 25px; box-sizing: border-box;">
+                        <p style="color: #666; line-height: 1.7; font-style: italic; font-size: 0.95rem; margin: 0; font-family: 'Montserrat', sans-serif;">"ახალმცნებას გაძლევთ, გიყვარდეთ ერთმანეთი! როგორც მე შეგიყვარეთ თქვენ, თქვენც ისე გიყვარდეთ ერთმანეთი. იმით გაიგებს ყველა, რომ ჩემი მოწაფენი ხართ, თუ გეყვარებათ ერთმანეთი."</p>
+                        <strong style="font-style: normal; display: block; margin-top: 8px; color: #aa954f; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; font-weight: 700;">— იოანე 13:34-35</strong>
+                    </div>
+                    <p style="color: #222; line-height: 1.6; font-size: 1.05rem; font-weight: 600; margin-top: 20px; margin-bottom: 0; font-family: 'Montserrat', sans-serif;">ჩვენ ვაშენებთ სიყვარულის, მეგობრობის და ზრუნვის ატმოსფეროს.</p>
+                </div>
+                
+                <div style="flex: 1; min-width: 280px; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; box-sizing: border-box;">
+                    <div>
+                        <div style="color: #aa954f; font-size: 2rem; margin-bottom: 15px;"><i class="fa-solid fa-bullseye"></i></div>
+                        <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 15px; color: #222; font-size: 1.4rem;">ჩვენი მისია</h3>
+                        <p style="color: #222; line-height: 1.6; font-size: 1.05rem; font-weight: 600; margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">ადამიანთა მოპოვება იესო ქრისტესთვის და მათი ცხოვრების შეცვლა.</p>
+                    </div>
+                    <div style="border-left: 3px solid #aa954f; padding-left: 15px; margin-top: 25px; box-sizing: border-box;">
+                        <p style="color: #666; line-height: 1.7; font-style: italic; font-size: 0.95rem; margin: 0; font-family: 'Montserrat', sans-serif;">"ამიტომ წადით და დაიმოწაფეთ ყველა ხალხი და მონათლეთ ისინი მამის, ძის და სულიწმიდის სახელით. ასწავლეთ მათ ყოველივეს დაცვა, რაც მე გამცნეთ. და აჰა, მე თქვენთანა ვარ ყოველდღე წუთისოფლის აღსასრულამდე - ამინ!"</p>
+                        <strong style="font-style: normal; display: block; margin-top: 8px; color: #aa954f; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; font-weight: 700;">— მათე 28:19-20</strong>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <i class="fa-solid fa-cross section-divider-icon"></i>
+        </div>
+
+        <section id="about-values" class="info-grid-section reveal-section" style="padding: 80px 0 40px 0;" aria-label="Core Values">
+            <div class="info-grid-container" style="display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+                <div>
+                    <span class="grid-uppertitle" style="color: #aa954f; display: block; margin-bottom: 5px;">რითი ვხელმძღვანელობთ</span>
+                    <h2 style="font-family: 'BPGNinoMtavruliBold', sans-serif; font-weight: 700; font-size: 2.2rem; margin-top: 5px; margin-bottom: 15px; color: #222; letter-spacing: -0.5px;">ჩვენი მთავარი ფასეულობები</h2>
+                    <p style="color: #555; max-width: 800px; line-height: 1.7; font-family: 'Montserrat', sans-serif; margin: 0;">ყველაფერი, რასაც ვაკეთებთ — კვირის მსახურებებიდან დაწყებული, საოჯახო ჯგუფებითა და საქველმოქმედო პროექტებით დამთავრებული — ეფუძნება ამ ფუნდამენტურ პრინციპებს.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 30px; width: 100%; box-sizing: border-box;">
+                    
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-book-bible" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>1. ბიბლიის ავტორიტეტი</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ღვთის სიტყვა არის ჩვენი ცხოვრებისა და რწმენის უზენაესი მეგზური.</p>
+                    </div>
+
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-people-group" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>2. გულწრფელი საზოგადოება</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ჩვენ ვაშენებთ ურთიერთობებს, რომლებიც დაფუძნებულია სიყვარულზე, ნდობასა და მხარდაჭერაზე.</p>
+                    </div>
+
+                    <div class="creed-card" style="background: #fdfbf7; padding: 35px 30px; border-radius: 8px; border-top: 4px solid #aa954f; box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03); box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #222; display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-hand-holding-heart" style="color: #aa954f; font-size: 1.4rem;"></i>
+                            <span>3. მსახურება და გაცემა</span>
+                        </strong>
+                        <p style="color: #555; line-height: 1.75; margin: 0; text-align: justify; font-size: 0.98rem; font-family: 'Montserrat', sans-serif;">ჩვენ მოწოდებულნი ვართ, გამოვიყენოთ ჩვენი ნიჭი და რესურსები სხვების საკეთილდღეოდ.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <i class="fa-solid fa-cross section-divider-icon"></i>
+        </div>
+
+        <section class="contact-section reveal-section" id="contact" aria-label="Contact and location">
             <div class="contact-container">
 
                 <div class="contact-info-col">
@@ -249,7 +362,7 @@
                         </div>
                     </div>
 
-                    <a href="mailto:info@efckutaisi.ge" class="btn btn-contact-cta">
+                    <a href="contact.html" class="btn btn-contact-cta">
                         <i class="fa-regular fa-envelope" aria-hidden="true"></i>  მოგვწერეთ შეტყობინება
                     </a>
                 </div>
@@ -289,5 +402,68 @@
     </div>
 
     <script src="../script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Enable CSS reveal animations
+            document.body.classList.add('js-enabled');
+            
+            // Intersection Observer for scroll reveal
+            const revealSections = document.querySelectorAll('.reveal-section');
+            if (revealSections.length > 0) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.15
+                };
+                
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+                
+                revealSections.forEach(section => {
+                    observer.observe(section);
+                });
+            }
+            
+            // Active Dot update logic
+            const sideDots = document.querySelectorAll('.dot-nav-item');
+            const dotSections = [
+                document.getElementById('about-hero'),
+                document.getElementById('about-history'),
+                document.getElementById('about-creed'),
+                document.getElementById('about-vision'),
+                document.getElementById('about-values'),
+                document.getElementById('contact')
+            ];
+            
+            if (sideDots.length > 0) {
+                function updateActiveDot() {
+                    let scrollPos = window.scrollY + window.innerHeight / 3;
+                    
+                    dotSections.forEach((sec, idx) => {
+                        if (sec) {
+                            let top = sec.offsetTop;
+                            let height = sec.offsetHeight;
+                            if (scrollPos >= top && scrollPos < top + height) {
+                                sideDots.forEach(dot => dot.classList.remove('active'));
+                                if (sideDots[idx]) {
+                                    sideDots[idx].classList.add('active');
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                window.addEventListener('scroll', updateActiveDot);
+                window.addEventListener('load', updateActiveDot);
+                updateActiveDot(); // Initial check
+            }
+        });
+    </script>
 </body>
 </html>
