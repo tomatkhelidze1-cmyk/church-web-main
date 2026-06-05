@@ -120,6 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const EASE     = 0.075; 
         const DRAG_THRESHOLD = 50; // მინიმალური პიქსელები დრაგის დასაფიქსირებლად
 
+        let lastWidth = window.innerWidth;
+        let lastItemWidth = 0;
+        let lastPad = 0;
+
         function getItemMetrics() {
             const item = track.querySelector('.card-item');
             if (!item) return { itemWidth: 380, totalWidth: 380 * originalCount };
@@ -137,10 +141,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function init() {
-            const { totalWidth } = getItemMetrics();
+            // თუ ეკრანის სიგანე არ შეცვლილა (მაგ. ვერტიკალური სქროლი მობილურზე), ვინარჩუნებთ პოზიციას
+            if (window.innerWidth === lastWidth && currentX !== 0) {
+                return;
+            }
+
+            const { itemWidth, totalWidth } = getItemMetrics();
             const pad = getContainerPadding();
-            targetX  = -totalWidth + pad;
-            currentX = -totalWidth + pad;
+
+            if (currentX !== 0 && lastItemWidth > 0) {
+                // რეზოლუციის სიგანის შეცვლისას (მაგ. ეკრანის როტაცია), ინარჩუნებს მიმდინარე აქტიურ სლაიდს
+                const index = Math.round((targetX - lastPad) / lastItemWidth);
+                targetX = (index * itemWidth) + pad;
+                currentX = targetX;
+            } else {
+                // საწყისი ჩატვირთვა
+                targetX  = -totalWidth + pad;
+                currentX = -totalWidth + pad;
+            }
+
+            lastWidth = window.innerWidth;
+            lastItemWidth = itemWidth;
+            lastPad = pad;
+
             track.style.transform = `translate3d(${currentX}px, 0, 0)`;
         }
 
