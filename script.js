@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let storedX    = 0;
         const EASE     = 0.075; 
         const DRAG_THRESHOLD = 50; // მინიმალური პიქსელები დრაგის დასაფიქსირებლად
+        let lastTouchTime = 0;
 
         let lastWidth = window.innerWidth;
         let lastItemWidth = 0;
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // მაუსის დაჭერა
         container.addEventListener('mousedown', (e) => {
+            if (Date.now() - lastTouchTime < 500) return;
             if (e.target.closest('.slider-arrow')) return;
             e.preventDefault();
             isDragging = true;
@@ -221,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isTouchDragging = false;
 
         container.addEventListener('touchstart', (e) => {
+            lastTouchTime = Date.now();
             isTouchDragging = true;
             touchStartX  = e.touches[0].clientX;
             touchStartY  = e.touches[0].clientY; 
@@ -228,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         container.addEventListener('touchmove', (e) => {
+            lastTouchTime = Date.now();
             if (!isTouchDragging) return;
             
             const diffX = e.touches[0].clientX - touchStartX;
@@ -255,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: false }); // აუცილებელია false, რომ ბრაუზერმა სქროლის ბლოკირება მოგვცეს
 
         container.addEventListener('touchend', () => {
+            lastTouchTime = Date.now();
             isTouchDragging = false;
             snapToNearest();
         });
