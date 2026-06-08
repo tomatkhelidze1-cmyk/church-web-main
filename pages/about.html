@@ -362,8 +362,8 @@
                     </div>
                     <h3 class="bullet-title">ამ კვირაში</h3>
                     <ul class="week-schedule" aria-label="Weekly schedule">
-                        <li><strong>კვირა 11:00</strong><span>პირველი მსახურება</span></li>
-                        <li><strong>შაბათი 16:00</strong><span>მეორე მსახურება</span></li>
+                        <li><strong>კვირა 11:00</strong><span>საკვირაო ღვთისმსახურება</span></li>
+                        <li><strong>შაბათი 16:00</strong><span>ახალგაზრდული მსახურება</span></li>
                         <li><strong>ოთხშაბათი 19:00</strong><span>საოჯახო ჯგუფები, ბავშვები, ახალგაზრდები</span></li>
                     </ul>
                 </div>
@@ -893,11 +893,11 @@
                                 <tbody>
                                     <tr>
                                         <td class="hours-day">კვირა</td>
-                                        <td class="hours-time">11:00 – პირველი მსახურება</td>
+                                        <td class="hours-time">11:00 – საკვირაო ღვთისმსახურება</td>
                                     </tr>
                                     <tr>
                                         <td class="hours-day">შაბათი</td>
-                                        <td class="hours-time">16:00 – მეორე მსახურება</td>
+                                        <td class="hours-time">16:00 – ახალგაზრდული მსახურება</td>
                                     </tr>
                                     <tr>
                                         <td class="hours-day">ოთხშაბათი</td>
@@ -967,16 +967,19 @@
     <script src="../script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Enable CSS reveal animations
-            document.body.classList.add('js-enabled');
+            // Enable CSS reveal animations if IntersectionObserver is supported
+            const hasObserver = 'IntersectionObserver' in window;
+            if (hasObserver) {
+                document.body.classList.add('js-enabled');
+            }
             
             // Intersection Observer for scroll reveal
             const revealSections = document.querySelectorAll('.reveal-section');
-            if (revealSections.length > 0) {
+            if (revealSections.length > 0 && hasObserver) {
                 const observerOptions = {
                     root: null,
-                    rootMargin: '0px',
-                    threshold: 0.15
+                    rootMargin: '100px 0px',
+                    threshold: 0.01
                 };
                 
                 const observer = new IntersectionObserver((entries, observer) => {
@@ -990,6 +993,11 @@
                 
                 revealSections.forEach(section => {
                     observer.observe(section);
+                });
+            } else if (revealSections.length > 0) {
+                // Fallback for browsers that don't support IntersectionObserver
+                revealSections.forEach(section => {
+                    section.classList.add('is-visible');
                 });
             }
             
