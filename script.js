@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dropdownLinks = navMenu.querySelectorAll('.has-dropdown > a');
         dropdownLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 1163) {
+                if (window.innerWidth <= 1307) {
                     e.preventDefault(); // არ გადავიდეს ლინკზე
                     const parentLi = link.parentElement;
 
@@ -88,6 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 hamburger.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = '';
             });
+        });
+
+        // მენიუს დაკეტვა გარედან კლიკისას
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('open') && 
+                !navMenu.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
         });
     }
 

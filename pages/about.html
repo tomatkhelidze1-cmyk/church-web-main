@@ -67,6 +67,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overscroll-behavior: contain;
         }
 
         .creed-modal-overlay.open {
@@ -83,6 +84,7 @@
             max-width: 650px;
             max-height: 85vh;
             overflow-y: auto;
+            overscroll-behavior: contain;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             position: relative;
             transform: scale(0.9) translateY(20px);
@@ -1060,7 +1062,10 @@
                 // Open Modal
                 modalOverlay.classList.add('open');
                 modalOverlay.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                
+                // Prevent background scrolling on all devices (desktop + mobile)
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
 
                 // Focus on modal close button or container
                 modalCloseBtn.focus();
@@ -1069,13 +1074,26 @@
             function closeModal() {
                 modalOverlay.classList.remove('open');
                 modalOverlay.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = ''; // Restore background scrolling
+                
+                // Restore background scrolling
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
                 
                 // Focus back on the card that triggered the modal
                 if (lastActiveElement) {
                     lastActiveElement.focus();
                 }
             }
+
+            // Prevent background touch scrolling on mobile devices
+            modalOverlay.addEventListener('touchmove', function(e) {
+                if (modalOverlay.classList.contains('open')) {
+                    // Prevent scrolling if touch is outside the scrollable modal container
+                    if (!e.target.closest('.creed-modal')) {
+                        e.preventDefault();
+                    }
+                }
+            }, { passive: false });
 
             // Bind click events to each card
             creedCards.forEach(card => {
