@@ -283,8 +283,18 @@ document.addEventListener('DOMContentLoaded', () => {
             currentX += (targetX - currentX) * EASE;
             const { totalWidth } = getItemMetrics();
             const pad = getContainerPadding();
-            if (currentX > pad)                    { targetX -= totalWidth; currentX -= totalWidth; }
-            if (currentX < -(totalWidth * 2) + pad){ targetX += totalWidth; currentX += totalWidth; }
+            if (currentX > pad) {
+                targetX -= totalWidth;
+                currentX -= totalWidth;
+                storedX -= totalWidth;
+                touchStoredX -= totalWidth;
+            }
+            if (currentX < -(totalWidth * 2) + pad) {
+                targetX += totalWidth;
+                currentX += totalWidth;
+                storedX += totalWidth;
+                touchStoredX += totalWidth;
+            }
             track.style.transform = `translate3d(${currentX}px, 0, 0)`;
             requestAnimationFrame(animate);
         }
