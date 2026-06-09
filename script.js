@@ -344,7 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         el.addEventListener('click', () => {
             const iframe = document.createElement('iframe');
-            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`);
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             iframe.setAttribute('allowfullscreen', 'true');
             iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
@@ -354,8 +353,22 @@ document.addEventListener('DOMContentLoaded', () => {
             container.className = 'video-container';
             container.appendChild(iframe);
 
-            el.innerHTML = '';
+            // Hide all existing children of the placeholder to preserve the user gesture target in DOM
+            Array.from(el.children).forEach(child => {
+                if (child !== container) {
+                    child.style.setProperty('display', 'none', 'important');
+                }
+            });
+
+            // Append container to the DOM first so the navigation is linked to the active user gesture
             el.appendChild(container);
+            
+            // Set src AFTER appending to DOM to trigger active autoplay
+            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`);
+            
+            // Focus the iframe immediately to transfer user activation
+            iframe.focus();
+
             el.style.display = 'block';
             el.style.background = '#000';
             el.removeAttribute('role');
