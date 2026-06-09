@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ka">
 <head>
     <meta charset="UTF-8">
@@ -550,7 +550,7 @@
             <div class="video-container">
                 <iframe 
                     id="mainSermonPlayer"
-                    src="https://www.youtube-nocookie.com/embed/-yhiipmNtMA?rel=0&modestbranding=1" 
+                    src="https://www.youtube-nocookie.com/embed/-yhiipmNtMA?rel=0&modestbranding=1&vq=hd1080" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     referrerpolicy="strict-origin-when-cross-origin"
                     allowfullscreen>
@@ -1342,7 +1342,7 @@
                     const videoId = item.getAttribute('data-video-id');
                     
                     if(videoId && mainPlayer) {
-                        mainPlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+                        mainPlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1&vq=hd1080`;
                         
                         episodeItems.forEach(el => el.classList.remove('is-playing'));
                         item.classList.add('is-playing');

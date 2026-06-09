@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
             el.appendChild(container);
             
             // Set src AFTER appending to DOM to trigger active autoplay
-            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`);
+            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&vq=hd1080&rel=0&modestbranding=1`);
             
             // Focus the iframe immediately to transfer user activation
             iframe.focus();
